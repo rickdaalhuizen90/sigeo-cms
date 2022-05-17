@@ -1,6 +1,20 @@
-# Magepresso ☕
+# Sigeo 🪶
+
+![Logo](./docs/logo.png)
+[![version](https://img.shields.io/badge/version-v0.0.1--beta-orange)](https://semver.org)
 
 A stripped down version of Magento 2, in order to use it as a CMS like Wordpress (but with better multisite support).
+
+## Todo
+- [ ] Disable/Remove unnecessary Magento modules.
+- [ ] Disable/Remove unnecessary vendor modules.
+- [ ] Remove unnecessary files & folders e.g. lib, dev ect.
+- [ ] Replace: Copyright © Magento, Inc. All rights reserved.
+- [ ] Rename Magento to Sigeo
+- [ ] Deprecate and remove unnecessary code in existing modules.
+- [ ] Create custom Dashboard
+- [ ] Add docker compose files
+- [ ] PHP 8 support
 
 ## Modules disabled/removed
 - [ ] Magento_AdminAnalytics
