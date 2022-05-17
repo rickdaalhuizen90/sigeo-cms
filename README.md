@@ -235,4 +235,9 @@ A stripped down version of Magento 2, in order to use it as a CMS like Wordpress
 - [X] Magento_WishlistGraphQl
 
 ## Modules refactored
-- 
+- [ ] Magento_Weee
+- [ ] Magento_WeeeGraphQl
+- [ ] Magento_CatalogWidget
+- [ ] Magento_Wishlist
+- [ ] Magento_WishlistAnalytics
+- [ ] Magento_WishlistGraphQl
