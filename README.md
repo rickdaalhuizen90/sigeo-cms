@@ -6,13 +6,18 @@
 A stripped down version of Magento 2, in order to use it as a CMS like Wordpress (but with better multisite support).
 
 ## Todo
-- [ ] Disable/Remove unnecessary Magento modules.
-- [ ] Disable/Remove unnecessary vendor modules.
-- [ ] Remove unnecessary files & folders e.g. lib, dev ect.
+
+### 0.0.1
+- [ ] Remove unnecessary Magento modules.
+- [ ] Remove unnecessary vendor modules.
+- [ ] Remove unnecessary files & folders in lib, dev ect.
+- [ ] Deprecate and remove unnecessary code in existing modules. @TODO SIGEO-0.0.1: refactor
+
+### 0.0.2
 - [ ] Replace: Copyright © Magento, Inc. All rights reserved.
 - [ ] Rename Magento to Sigeo
-- [ ] Deprecate and remove unnecessary code in existing modules.
-- [ ] Create custom Dashboard
+
+### 1.0.0-beta
 - [ ] Add docker compose files
 - [ ] PHP 8 support
 
@@ -32,8 +37,8 @@ A stripped down version of Magento 2, in order to use it as a CMS like Wordpress
 - [ ] Magento_Search
 - [ ] Magento_Backup
 - [ ] Magento_Eav
-- [ ] Magento_Customer
-- [ ] Magento_BundleImportExport
+- [X] Magento_Customer
+- [X] Magento_BundleImportExport
 - [ ] Magento_CacheInvalidate
 - [ ] Magento_AdminNotification
 - [ ] Magento_Indexer
@@ -42,84 +47,84 @@ A stripped down version of Magento 2, in order to use it as a CMS like Wordpress
 - [ ] Magento_Authorization
 - [ ] Magento_GraphQl
 - [ ] Magento_StoreGraphQl
-- [ ] Magento_CatalogImportExport
-- [ ] Magento_Catalog
-- [ ] Magento_CatalogInventory
-- [ ] Magento_Rule
-- [ ] Magento_Payment
-- [ ] Magento_CatalogRuleGraphQl
-- [ ] Magento_CatalogRule
-- [ ] Magento_CatalogUrlRewrite
-- [ ] Magento_EavGraphQl
+- [X] Magento_CatalogImportExport
+- [X] Magento_Catalog
+- [X] Magento_CatalogInventory
+- [X] Magento_Rule
+- [X] Magento_Payment
+- [X] Magento_CatalogRuleGraphQl
+- [X] Magento_CatalogRule
+- [X] Magento_CatalogUrlRewrite
+- [X] Magento_EavGraphQl
 - [ ] Magento_Widget
-- [ ] Magento_Quote
-- [ ] Magento_SalesSequence
-- [ ] Magento_CheckoutAgreementsGraphQl
-- [ ] Magento_Bundle
+- [X] Magento_Quote
+- [X] Magento_SalesSequence
+- [X] Magento_CheckoutAgreementsGraphQl
+- [X] Magento_Bundle
 - [ ] Magento_CmsGraphQl
 - [ ] Magento_CmsUrlRewrite
 - [ ] Magento_CmsUrlRewriteGraphQl
 - [ ] Magento_CatalogGraphQl
-- [ ] Magento_User
-- [ ] Magento_Msrp
-- [ ] Magento_Sales
-- [ ] Magento_QuoteGraphQl
-- [ ] Magento_Checkout
-- [ ] Magento_Contact
+- [X] Magento_User
+- [X] Magento_Msrp
+- [X] Magento_Sales
+- [X] Magento_QuoteGraphQl
+- [X] Magento_Checkout
+- [X] Magento_Contact
 - [ ] Magento_Cookie
 - [ ] Magento_Cron
 - [ ] Magento_Csp
-- [ ] Magento_CurrencySymbol
-- [ ] Magento_CatalogCustomerGraphQl
+- [X] Magento_CurrencySymbol
+- [X] Magento_CatalogCustomerGraphQl
 - [ ] Magento_Integration
-- [ ] Magento_Downloadable
-- [ ] Magento_CustomerGraphQl
-- [ ] Magento_CustomerImportExport
+- [X] Magento_Downloadable
+- [X] Magento_CustomerGraphQl
+- [X] Magento_CustomerImportExport
 - [ ] Magento_Deploy
 - [ ] Magento_Developer
-- [ ] Magento_Dhl
+- [X] Magento_Dhl
 - [ ] Magento_AsynchronousOperations
 - [ ] Magento_DirectoryGraphQl
 - [ ] Magento_DownloadableGraphQl
-- [ ] Magento_CustomerDownloadableGraphQl
-- [ ] Magento_ImportExport
-- [ ] Magento_Captcha
-- [ ] Magento_BundleGraphQl
-- [ ] Magento_CatalogSearch
-- [ ] Magento_AdvancedSearch
+- [X] Magento_CustomerDownloadableGraphQl
+- [X] Magento_ImportExport
+- [X] Magento_Captcha
+- [X] Magento_BundleGraphQl
+- [X] Magento_CatalogSearch
+- [X] Magento_AdvancedSearch
 - [ ] Magento_Elasticsearch
 - [ ] Magento_Email
 - [ ] Magento_EncryptionKey
-- [ ] Magento_Fedex
-- [ ] Magento_GiftMessage
-- [ ] Magento_GiftMessageGraphQl
-- [ ] Magento_GoogleAdwords
+- [X] Magento_Fedex
+- [X] Magento_GiftMessage
+- [X] Magento_GiftMessageGraphQl
+- [X] Magento_GoogleAdwords
 - [ ] Magento_GoogleAnalytics
 - [ ] Magento_Ui
-- [ ] Magento_CatalogCmsGraphQl
+- [X] Magento_CatalogCmsGraphQl
 - [ ] Magento_PageCache
-- [ ] Magento_GroupedProduct
-- [ ] Magento_GroupedImportExport
-- [ ] Magento_GroupedCatalogInventory
-- [ ] Magento_GroupedProductGraphQl
-- [ ] Magento_DownloadableImportExport
-- [ ] Magento_ConfigurableProduct
-- [ ] Magento_InstantPurchase
-- [ ] Magento_Analytics
+- [X] Magento_GroupedProduct
+- [X] Magento_GroupedImportExport
+- [X] Magento_GroupedCatalogInventory
+- [X] Magento_GroupedProductGraphQl
+- [X] Magento_DownloadableImportExport
+- [X] Magento_ConfigurableProduct
+- [X] Magento_InstantPurchase
+- [X] Magento_Analytics
 - [ ] Magento_JwtFrameworkAdapter
 - [ ] Magento_JwtUserToken
-- [ ] Magento_LayeredNavigation
-- [ ] Magento_LoginAsCustomer
-- [ ] Magento_LoginAsCustomerAdminUi
-- [ ] Magento_LoginAsCustomerApi
-- [ ] Magento_LoginAsCustomerAssistance
-- [ ] Magento_LoginAsCustomerFrontendUi
-- [ ] Magento_LoginAsCustomerGraphQl
-- [ ] Magento_LoginAsCustomerLog
-- [ ] Magento_LoginAsCustomerPageCache
-- [ ] Magento_LoginAsCustomerQuote
-- [ ] Magento_LoginAsCustomerSales
-- [ ] Magento_Marketplace
+- [X] Magento_LayeredNavigation
+- [X] Magento_LoginAsCustomer
+- [X] Magento_LoginAsCustomerAdminUi
+- [X] Magento_LoginAsCustomerApi
+- [X] Magento_LoginAsCustomerAssistance
+- [X] Magento_LoginAsCustomerFrontendUi
+- [X] Magento_LoginAsCustomerGraphQl
+- [X] Magento_LoginAsCustomerLog
+- [X] Magento_LoginAsCustomerPageCache
+- [X] Magento_LoginAsCustomerQuote
+- [X] Magento_LoginAsCustomerSales
+- [X] Magento_Marketplace
 - [ ] Magento_MediaContent
 - [ ] Magento_MediaContentApi
 - [ ] Magento_MediaContentCatalog
@@ -130,9 +135,9 @@ A stripped down version of Magento 2, in order to use it as a CMS like Wordpress
 - [ ] Magento_MediaContentSynchronizationCms
 - [ ] Magento_MediaGallery
 - [ ] Magento_MediaGalleryApi
-- [ ] Magento_MediaGalleryCatalog
-- [ ] Magento_MediaGalleryCatalogIntegration
-- [ ] Magento_MediaGalleryCatalogUi
+- [X] Magento_MediaGalleryCatalog
+- [X] Magento_MediaGalleryCatalogIntegration
+- [X] Magento_MediaGalleryCatalogUi
 - [ ] Magento_MediaGalleryCmsUi
 - [ ] Magento_MediaGalleryIntegration
 - [ ] Magento_MediaGalleryMetadata
@@ -145,87 +150,89 @@ A stripped down version of Magento 2, in order to use it as a CMS like Wordpress
 - [ ] Magento_MediaGalleryUi
 - [ ] Magento_MediaGalleryUiApi
 - [ ] Magento_Robots
-- [ ] Magento_MessageQueue
-- [ ] Magento_CatalogRuleConfigurable
-- [ ] Magento_MsrpConfigurableProduct
-- [ ] Magento_MsrpGroupedProduct
-- [ ] Magento_Multishipping
+- [X] Magento_MessageQueue
+- [X] Magento_CatalogRuleConfigurable
+- [X] Magento_MsrpConfigurableProduct
+- [X] Magento_MsrpGroupedProduct
+- [X] Magento_Multishipping
 - [ ] Magento_MysqlMq
-- [ ] Magento_NewRelicReporting
-- [ ] Magento_Newsletter
-- [ ] Magento_NewsletterGraphQl
-- [ ] Magento_OfflinePayments
-- [ ] Magento_SalesRule
+- [X] Magento_NewRelicReporting
+- [X] Magento_Newsletter
+- [X] Magento_NewsletterGraphQl
+- [X] Magento_OfflinePayments
+- [X] Magento_SalesRule
 - [ ] Magento_GraphQlCache
-- [ ] Magento_CardinalCommerce
-- [ ] Magento_PaymentGraphQl
-- [ ] Magento_Vault
-- [ ] Magento_Paypal
-- [ ] Magento_PaypalGraphQl
-- [ ] Magento_Persistent
-- [ ] Magento_ProductAlert
-- [ ] Magento_ProductVideo
-- [ ] Magento_CheckoutAgreements
-- [ ] Magento_QuoteAnalytics
-- [ ] Magento_QuoteBundleOptions
-- [ ] Magento_QuoteConfigurableOptions
-- [ ] Magento_QuoteDownloadableLinks
-- [ ] Magento_ConfigurableProductGraphQl
-- [ ] Magento_RelatedProductGraphQl
-- [ ] Magento_ReleaseNotification
+- [X] Magento_CardinalCommerce
+- [X] Magento_PaymentGraphQl
+- [X] Magento_Vault
+- [X] Magento_Paypal
+- [X] Magento_PaypalGraphQl
+- [X] Magento_Persistent
+- [X] Magento_ProductAlert
+- [X] Magento_ProductVideo
+- [X] Magento_CheckoutAgreements
+- [X] Magento_QuoteAnalytics
+- [X] Magento_QuoteBundleOptions
+- [X] Magento_QuoteConfigurableOptions
+- [X] Magento_QuoteDownloadableLinks
+- [X] Magento_ConfigurableProductGraphQl
+- [X] Magento_RelatedProductGraphQl
+- [X] Magento_ReleaseNotification
 - [ ] Magento_Sitemap
 - [ ] Magento_Reports
 - [ ] Magento_RequireJs
-- [ ] Magento_Review
-- [ ] Magento_ReviewAnalytics
-- [ ] Magento_ReviewGraphQl
+- [X] Magento_Review
+- [X] Magento_ReviewAnalytics
+- [X] Magento_ReviewGraphQl
 - [ ] Magento_MediaStorage
 - [ ] Magento_Rss
-- [ ] Magento_Elasticsearch6
-- [ ] Magento_ConfigurableProductSales
-- [ ] Magento_SalesAnalytics
-- [ ] Magento_SalesGraphQl
-- [ ] Magento_SalesInventory
-- [ ] Magento_OfflineShipping
-- [ ] Magento_ConfigurableImportExport
-- [ ] Magento_UrlRewrite
+- [X] Magento_Elasticsearch6
+- [X] Magento_ConfigurableProductSales
+- [X] Magento_SalesAnalytics
+- [X] Magento_SalesGraphQl
+- [X] Magento_SalesInventory
+- [X] Magento_OfflineShipping
+- [X] Magento_ConfigurableImportExport
+- [X] Magento_UrlRewrite
 - [ ] Magento_Elasticsearch7
-- [ ] Magento_CustomerAnalytics
-- [ ] Magento_SendFriend
-- [ ] Magento_SendFriendGraphQl
-- [ ] Magento_Shipping
+- [X] Magento_CustomerAnalytics
+- [X] Magento_SendFriend
+- [X] Magento_SendFriendGraphQl
+- [X] Magento_Shipping
 - [ ] Magento_RemoteStorage
 - [ ] Magento_AwsS3
-- [ ] Magento_UrlRewriteGraphQl
+- [X] Magento_UrlRewriteGraphQl
 - [ ] Magento_Webapi
 - [ ] Magento_SwaggerWebapi
 - [ ] Magento_SwaggerWebapiAsync
 - [ ] Magento_Swatches
 - [ ] Magento_SwatchesGraphQl
 - [ ] Magento_SwatchesLayeredNavigation
-- [ ] Magento_Tax
-- [ ] Magento_TaxGraphQl
-- [ ] Magento_TaxImportExport
-- [ ] Magento_CompareListGraphQl
+- [X] Magento_Tax
+- [X] Magento_TaxGraphQl
+- [X] Magento_TaxImportExport
+- [X] Magento_CompareListGraphQl
 - [ ] Magento_ThemeGraphQl
 - [ ] Magento_Translation
-- [ ] Magento_GoogleOptimizer
-- [ ] Magento_Ups
-- [ ] Magento_SampleData
-- [ ] Magento_CatalogUrlRewriteGraphQl
-- [ ] Magento_CatalogAnalytics
-- [ ] Magento_Usps
-- [ ] Magento_CatalogInventoryGraphQl
-- [ ] Magento_PaypalCaptcha
+- [X] Magento_GoogleOptimizer
+- [X] Magento_Ups
+- [X] Magento_SampleData
+- [X] Magento_CatalogUrlRewriteGraphQl
+- [X] Magento_CatalogAnalytics
+- [X] Magento_Usps
+- [X] Magento_CatalogInventoryGraphQl
+- [X] Magento_PaypalCaptcha
 - [ ] Magento_VaultGraphQl
 - [ ] Magento_Version
 - [ ] Magento_Swagger
 - [ ] Magento_WebapiAsync
 - [ ] Magento_WebapiSecurity
-- [ ] Magento_Weee
-- [ ] Magento_WeeeGraphQl
-- [ ] Magento_CatalogWidget
-- [ ] Magento_Wishlist
-- [ ] Magento_WishlistAnalytics
-- [ ] Magento_WishlistGraphQl
+- [X] Magento_Weee
+- [X] Magento_WeeeGraphQl
+- [X] Magento_CatalogWidget
+- [X] Magento_Wishlist
+- [X] Magento_WishlistAnalytics
+- [X] Magento_WishlistGraphQl
 
+## Modules refactored
+- 
