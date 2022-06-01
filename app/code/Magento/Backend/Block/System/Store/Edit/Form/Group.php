@@ -15,11 +15,6 @@ namespace Magento\Backend\Block\System\Store\Edit\Form;
 class Group extends \Magento\Backend\Block\System\Store\Edit\AbstractForm
 {
     /**
-     * @var \Magento\Catalog\Model\Config\Source\Category
-     */
-    protected $_category;
-
-    /**
      * @var \Magento\Store\Model\StoreFactory
      */
     protected $_storeFactory;
@@ -33,7 +28,6 @@ class Group extends \Magento\Backend\Block\System\Store\Edit\AbstractForm
      * @param \Magento\Backend\Block\Template\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param \Magento\Framework\Data\FormFactory $formFactory
-     * @param \Magento\Catalog\Model\Config\Source\Category $category
      * @param \Magento\Store\Model\StoreFactory $storeFactory
      * @param \Magento\Store\Model\WebsiteFactory $websiteFactory
      * @param array $data
@@ -42,12 +36,10 @@ class Group extends \Magento\Backend\Block\System\Store\Edit\AbstractForm
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Data\FormFactory $formFactory,
-        \Magento\Catalog\Model\Config\Source\Category $category,
         \Magento\Store\Model\StoreFactory $storeFactory,
         \Magento\Store\Model\WebsiteFactory $websiteFactory,
         array $data = []
     ) {
-        $this->_category = $category;
         $this->_storeFactory = $storeFactory;
         $this->_websiteFactory = $websiteFactory;
         parent::__construct($context, $registry, $formFactory, $data);
@@ -133,20 +125,6 @@ class Group extends \Magento\Backend\Block\System\Store\Edit\AbstractForm
             ]
         );
 
-        $categories = $this->_category->toOptionArray();
-
-        $fieldset->addField(
-            'group_root_category_id',
-            'select',
-            [
-                'name' => 'group[root_category_id]',
-                'label' => __('Root Category'),
-                'value' => $groupModel->getRootCategoryId(),
-                'values' => $categories,
-                'required' => true,
-                'disabled' => $groupModel->isReadOnly()
-            ]
-        );
         if ($this->_coreRegistry->registry('store_action') == 'edit') {
             $storeActive = 1;
             $stores = $this->_storeFactory->create()->getCollection()

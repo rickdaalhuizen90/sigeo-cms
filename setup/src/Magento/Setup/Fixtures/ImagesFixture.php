@@ -54,14 +54,9 @@ class ImagesFixture extends Fixture
     private $filesystem;
 
     /**
-     * @var \Magento\Catalog\Model\Product\Media\Config
+     *
      */
     private $mediaConfig;
-
-    /**
-     * @var \Magento\Eav\Model\AttributeRepository
-     */
-    private $attributeRepository;
 
     /**
      * @var \Magento\Framework\DB\Adapter\AdapterInterface
@@ -86,26 +81,6 @@ class ImagesFixture extends Fixture
     /**
      * @var array
      */
-    private $attributeCodesCache = [];
-
-    /**
-     * @var int
-     */
-    private $imagesInsertBatchSize = 1000;
-
-    /**
-     * @var int
-     */
-    private $productsSelectBatchSize = 1000;
-
-    /**
-     * @var int
-     */
-    private $productsCountCache;
-
-    /**
-     * @var array
-     */
     private $tableCache = [];
     /**
      * @var ImageResize
@@ -117,8 +92,7 @@ class ImagesFixture extends Fixture
      * @param \Magento\Framework\App\ResourceConnection $resourceConnection
      * @param ImagesGenerator\ImagesGeneratorFactory $imagesGeneratorFactory
      * @param \Magento\Framework\Filesystem $filesystem
-     * @param \Magento\Catalog\Model\Product\Media\Config $mediaConfig
-     * @param \Magento\Eav\Model\AttributeRepository $attributeRepository
+     * @param \Magento\MediaStorage\Model\Config\Media\Config $mediaConfig
      * @param \Magento\Framework\DB\Sql\ColumnValueExpressionFactory $expressionFactory
      * @param \Magento\Setup\Model\BatchInsertFactory $batchInsertFactory
      * @param \Magento\Framework\EntityManager\MetadataPool $metadataPool
@@ -129,8 +103,7 @@ class ImagesFixture extends Fixture
         \Magento\Framework\App\ResourceConnection $resourceConnection,
         \Magento\Setup\Fixtures\ImagesGenerator\ImagesGeneratorFactory $imagesGeneratorFactory,
         \Magento\Framework\Filesystem $filesystem,
-        \Magento\Catalog\Model\Product\Media\Config $mediaConfig,
-        \Magento\Eav\Model\AttributeRepository $attributeRepository,
+        \Magento\MediaStorage\Model\Config\Media\Config $mediaConfig,
         \Magento\Framework\DB\Sql\ColumnValueExpressionFactory $expressionFactory,
         \Magento\Setup\Model\BatchInsertFactory $batchInsertFactory,
         \Magento\Framework\EntityManager\MetadataPool $metadataPool,
@@ -142,7 +115,6 @@ class ImagesFixture extends Fixture
         $this->resourceConnection = $resourceConnection;
         $this->filesystem = $filesystem;
         $this->mediaConfig = $mediaConfig;
-        $this->attributeRepository = $attributeRepository;
         $this->expressionFactory = $expressionFactory;
         $this->batchInsertFactory = $batchInsertFactory;
         $this->metadataPool = $metadataPool;
@@ -156,8 +128,6 @@ class ImagesFixture extends Fixture
     public function execute()
     {
         if (!$this->checkIfImagesExists() && $this->getImagesToGenerate()) {
-            $this->createImageEntities();
-            $this->assignImagesToProducts();
             iterator_to_array($this->imageResize->resizeFromThemes(), false);
         }
     }
@@ -227,9 +197,9 @@ class ImagesFixture extends Fixture
      *
      * @return void
      */
-    private function createImageEntities()
+   /* private function createImageEntities()
     {
-        /** @var \Magento\Setup\Model\BatchInsert $batchInsert */
+
         $batchInsert = $this->batchInsertFactory->create([
             'insertIntoTable' => $this->getTable('catalog_product_entity_media_gallery'),
             'batchSize' => $this->imagesInsertBatchSize
@@ -243,7 +213,7 @@ class ImagesFixture extends Fixture
         }
 
         $batchInsert->flush();
-    }
+    }*/
 
     /**
      * Create generator that creates image files and puts them to appropriate media folder
@@ -252,9 +222,9 @@ class ImagesFixture extends Fixture
      * @return \Generator
      * @throws \Magento\Framework\Exception\FileSystemException
      */
-    private function generateImageFilesGenerator()
+    /*private function generateImageFilesGenerator()
     {
-        /** @var \Magento\Setup\Fixtures\ImagesGenerator\ImagesGenerator $imagesGenerator */
+
         $imagesGenerator = $this->imagesGeneratorFactory->create();
         $mediaDirectory = $this->filesystem->getDirectoryWrite(DirectoryList::MEDIA);
         $productImagesDirectoryPath = $mediaDirectory->getRelativePath($this->mediaConfig->getBaseMediaPath());
@@ -280,7 +250,7 @@ class ImagesFixture extends Fixture
 
             yield $imageFullName;
         }
-    }
+    }*/
 
     /**
      * Assign created images to products according to Y images per each product
@@ -288,21 +258,21 @@ class ImagesFixture extends Fixture
      * @return void
      * @throws \Exception
      */
-    private function assignImagesToProducts()
+    /*private function assignImagesToProducts()
     {
-        /** @var \Magento\Setup\Model\BatchInsert $batchInsertCatalogProductEntityVarchar */
+
         $batchInsertCatalogProductEntityVarchar = $this->batchInsertFactory->create([
             'insertIntoTable' => $this->getTable('catalog_product_entity_varchar'),
             'batchSize' => $this->imagesInsertBatchSize
         ]);
 
-        /** @var \Magento\Setup\Model\BatchInsert $batchInsertCatalogProductEntityMediaGalleryValue */
+
         $batchInsertCatalogProductEntityMediaGalleryValue = $this->batchInsertFactory->create([
             'insertIntoTable' => $this->getTable('catalog_product_entity_media_gallery_value'),
             'batchSize' => $this->imagesInsertBatchSize
         ]);
 
-        /** @var \Magento\Setup\Model\BatchInsert $batchInsertCatalogProductEntityMediaGalleryValueToEntity */
+
         $batchInsertCatalogProductEntityMediaGalleryValueToEntity = $this->batchInsertFactory->create([
             'insertIntoTable' => $this->getTable('catalog_product_entity_media_gallery_value_to_entity'),
             'batchSize' => $this->imagesInsertBatchSize
@@ -345,7 +315,7 @@ class ImagesFixture extends Fixture
         $batchInsertCatalogProductEntityVarchar->flush();
         $batchInsertCatalogProductEntityMediaGalleryValue->flush();
         $batchInsertCatalogProductEntityMediaGalleryValueToEntity->flush();
-    }
+    }*/
 
     /**
      * Returns generator to iterate in memory-safe way over all product entities in DB
@@ -353,7 +323,7 @@ class ImagesFixture extends Fixture
      * @return \Generator
      * @throws \Exception
      */
-    private function getProductGenerator()
+   /* private function getProductGenerator()
     {
         $offset = 0;
 
@@ -372,7 +342,7 @@ class ImagesFixture extends Fixture
                 }
             }
         }
-    }
+    }*/
 
     /**
      * Get products entity ids
@@ -382,7 +352,7 @@ class ImagesFixture extends Fixture
      * @return array
      * @throws \Exception
      */
-    private function getProducts($limit, $offset)
+   /* private function getProducts($limit, $offset)
     {
         $select = $this->getDbConnection()
             ->select()
@@ -391,14 +361,14 @@ class ImagesFixture extends Fixture
             ->limit($limit, $offset);
 
         return $this->getDbConnection()->fetchAssoc($select);
-    }
+    }*/
 
     /**
      * Creates generator to iterate infinitely over all image entities
      *
      * @return \Generator
      */
-    private function getImagesGenerator()
+  /*  private function getImagesGenerator()
     {
         $select = $this->getDbConnection()
             ->select()
@@ -417,7 +387,7 @@ class ImagesFixture extends Fixture
                 reset($images);
             }
         }
-    }
+    }*/
 
     /**
      * Return number of images to create
@@ -436,19 +406,19 @@ class ImagesFixture extends Fixture
      *
      * @return null|int
      */
-    private function getImagesPerProduct()
+ /*   private function getImagesPerProduct()
     {
         $config = $this->fixtureModel->getValue('product-images', []);
 
         return $config['images-per-product'] ?? null;
-    }
+    }*/
 
     /**
      * Get amount of existing products
      *
      * @return int
      */
-    private function getProductsCount()
+    /*private function getProductsCount()
     {
         if ($this->productsCountCache === null) {
             $select = $select = $this->getDbConnection()
@@ -464,7 +434,7 @@ class ImagesFixture extends Fixture
         }
 
         return $this->productsCountCache;
-    }
+    }*/
 
     /**
      * Get amount of existing images
@@ -492,7 +462,7 @@ class ImagesFixture extends Fixture
      * @return int
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    private function getAttributeId($attributeCode)
+   /* private function getAttributeId($attributeCode)
     {
         if (!isset($this->attributeCodesCache[$attributeCode])) {
             $attribute = $this->attributeRepository->get(
@@ -504,7 +474,7 @@ class ImagesFixture extends Fixture
         }
 
         return $this->attributeCodesCache[$attributeCode];
-    }
+    }*/
 
     /**
      * Retrieve current connection to DB
@@ -546,10 +516,10 @@ class ImagesFixture extends Fixture
      * @return string
      * @throws \Exception
      */
-    private function getProductLinkField()
+  /*  private function getProductLinkField()
     {
         return $this->metadataPool
             ->getMetadata(\Magento\Catalog\Api\Data\ProductInterface::class)
             ->getLinkField();
-    }
+    }*/
 }

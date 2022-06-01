@@ -6,57 +6,18 @@
 
 namespace Magento\Integration\Model;
 
-use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Integration\Model\UserToken\UserTokenParametersFactory;
-use Magento\Integration\Api\Exception\UserTokenException;
-use Magento\Integration\Api\UserTokenIssuerInterface;
-use Magento\Integration\Api\UserTokenRevokerInterface;
-use Magento\Integration\Model\Oauth\TokenFactory as TokenModelFactory;
-use Magento\Integration\Model\ResourceModel\Oauth\Token\CollectionFactory as TokenCollectionFactory;
-use Magento\Integration\Model\Oauth\Token\RequestThrottler;
-use Magento\Framework\Exception\AuthenticationException;
-use Magento\Framework\Event\ManagerInterface;
 use Magento\Integration\Api\CustomerTokenServiceInterface;
+use Magento\Integration\Api\Exception\UserTokenException;
+use Magento\Integration\Api\UserTokenRevokerInterface;
+use Magento\Integration\Model\Oauth\Token\RequestThrottler;
 
 /**
  * @inheritdoc
  */
 class CustomerTokenService implements CustomerTokenServiceInterface
 {
-    /**
-     * @var ManagerInterface
-     */
-    private $eventManager;
-
-    /**
-     * Customer Account Service
-     *
-     * @var AccountManagementInterface
-     */
-    private $accountManagement;
-
-    /**
-     * @var CredentialsValidator
-     */
-    private $validatorHelper;
-
-    /**
-     * @var RequestThrottler
-     */
-    private $requestThrottler;
-
-    /**
-     * @var UserTokenParametersFactory
-     */
-    private $tokenParametersFactory;
-
-    /**
-     * @var UserTokenIssuerInterface
-     */
-    private $tokenIssuer;
-
     /**
      * @var UserTokenRevokerInterface
      */
@@ -65,61 +26,12 @@ class CustomerTokenService implements CustomerTokenServiceInterface
     /**
      * Initialize service
      *
-     * @param TokenModelFactory $tokenModelFactory
-     * @param AccountManagementInterface $accountManagement
-     * @param TokenCollectionFactory $tokenModelCollectionFactory
-     * @param CredentialsValidator $validatorHelper
-     * @param ManagerInterface|null $eventManager
-     * @param UserTokenParametersFactory|null $tokenParamsFactory
-     * @param UserTokenIssuerInterface|null $tokenIssuer
      * @param UserTokenRevokerInterface|null $tokenRevoker
      */
     public function __construct(
-        TokenModelFactory $tokenModelFactory,
-        AccountManagementInterface $accountManagement,
-        TokenCollectionFactory $tokenModelCollectionFactory,
-        CredentialsValidator $validatorHelper,
-        ManagerInterface $eventManager = null,
-        ?UserTokenParametersFactory $tokenParamsFactory = null,
-        ?UserTokenIssuerInterface $tokenIssuer = null,
         ?UserTokenRevokerInterface $tokenRevoker = null
     ) {
-        $this->accountManagement = $accountManagement;
-        $this->validatorHelper = $validatorHelper;
-        $this->eventManager = $eventManager ?: ObjectManager::getInstance()->get(ManagerInterface::class);
-        $this->tokenParametersFactory = $tokenParamsFactory
-            ?? ObjectManager::getInstance()->get(UserTokenParametersFactory::class);
-        $this->tokenIssuer = $tokenIssuer ?? ObjectManager::getInstance()->get(UserTokenIssuerInterface::class);
         $this->tokenRevoker = $tokenRevoker ?? ObjectManager::getInstance()->get(UserTokenRevokerInterface::class);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function createCustomerAccessToken($username, $password)
-    {
-        $this->validatorHelper->validate($username, $password);
-        $this->getRequestThrottler()->throttle($username, RequestThrottler::USER_TYPE_CUSTOMER);
-        try {
-            $customerDataObject = $this->accountManagement->authenticate($username, $password);
-        } catch (\Exception $e) {
-            $this->getRequestThrottler()->logAuthenticationFailure($username, RequestThrottler::USER_TYPE_CUSTOMER);
-            throw new AuthenticationException(
-                __(
-                    'The account sign-in was incorrect or your account is disabled temporarily. '
-                    . 'Please wait and try again later.'
-                )
-            );
-        }
-        $this->eventManager->dispatch('customer_login', ['customer' => $customerDataObject]);
-        $this->getRequestThrottler()->resetAuthenticationFailuresCount($username, RequestThrottler::USER_TYPE_CUSTOMER);
-        $context = new CustomUserContext(
-            (int)$customerDataObject->getId(),
-            CustomUserContext::USER_TYPE_CUSTOMER
-        );
-        $params = $this->tokenParametersFactory->create();
-
-        return $this->tokenIssuer->create($context, $params);
     }
 
     /**
@@ -147,9 +59,11 @@ class CustomerTokenService implements CustomerTokenServiceInterface
      */
     private function getRequestThrottler()
     {
-        if (!$this->requestThrottler instanceof RequestThrottler) {
-            return ObjectManager::getInstance()->get(RequestThrottler::class);
-        }
-        return $this->requestThrottler;
+        return;
+    }
+
+    public function createCustomerAccessToken($username, $password)
+    {
+        // TODO: Implement createCustomerAccessToken() method.
     }
 }

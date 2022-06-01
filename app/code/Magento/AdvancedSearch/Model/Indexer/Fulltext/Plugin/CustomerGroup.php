@@ -5,15 +5,13 @@
  */
 namespace Magento\AdvancedSearch\Model\Indexer\Fulltext\Plugin;
 
-use Magento\CatalogSearch\Model\Indexer\Fulltext;
-use Magento\CatalogSearch\Model\Indexer\Fulltext\Plugin\AbstractPlugin;
+
 use Magento\Framework\Indexer\IndexerRegistry;
 use Magento\Customer\Model\ResourceModel\Group;
 use Magento\Framework\Model\AbstractModel;
-use Magento\Catalog\Model\ResourceModel\Attribute;
 use Magento\AdvancedSearch\Model\Client\ClientOptionsInterface;
 
-class CustomerGroup extends AbstractPlugin
+class CustomerGroup
 {
     /**
      * @var ClientOptionsInterface
@@ -28,7 +26,6 @@ class CustomerGroup extends AbstractPlugin
         IndexerRegistry $indexerRegistry,
         ClientOptionsInterface $clientOptions
     ) {
-        parent::__construct($indexerRegistry);
         $this->clientOptions = $clientOptions;
     }
 
@@ -48,9 +45,7 @@ class CustomerGroup extends AbstractPlugin
     ) {
         $needInvalidation = $group->isObjectNew() || $group->dataHasChangedFor('tax_class_id');
         $result = $proceed($group);
-        if ($needInvalidation) {
-            $this->indexerRegistry->get(Fulltext::INDEXER_ID)->invalidate();
-        }
+
         return $result;
     }
 }

@@ -11,7 +11,7 @@ use Magento\Elasticsearch\SearchAdapter\ConnectionManager;
 use Magento\Elasticsearch\Model\Config;
 use Psr\Log\LoggerInterface;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\CatalogSearch\Model\Indexer\Fulltext;
+use Magento\Elasticsearch\Model\Indexer\Fulltext;
 
 /**
  * Index name resolver for Elasticsearch

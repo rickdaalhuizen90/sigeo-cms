@@ -9,14 +9,13 @@
  */
 namespace Magento\Theme\Model\Theme\Source;
 
-use Magento\Eav\Model\Entity\Attribute\Source\AbstractSource;
 use Magento\Framework\View\Design\Theme\Label;
 
 /**
  * Design
  *
  */
-class Theme extends AbstractSource
+class Theme
 {
     /**
      * @var Label

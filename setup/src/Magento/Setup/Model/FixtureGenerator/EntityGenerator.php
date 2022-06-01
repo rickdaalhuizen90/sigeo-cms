@@ -47,16 +47,6 @@ class EntityGenerator
     private $resourceConnection;
 
     /**
-     * @var \Magento\Eav\Model\ResourceModel\AttributeLoader
-     */
-    private $attributeLoader;
-
-    /**
-     * @var \Magento\Eav\Api\Data\AttributeInterface[]
-     */
-    private $attributes;
-
-    /**
      * @var \Magento\Framework\DB\Adapter\AdapterInterface
      */
     private $connection;
@@ -105,7 +95,6 @@ class EntityGenerator
 
     /**
      * @param SqlCollector $sqlCollector
-     * @param \Magento\Eav\Model\ResourceModel\AttributeLoader $attributeLoader
      * @param \Magento\Framework\App\ResourceConnection $resourceConnection
      * @param \Magento\Framework\EntityManager\MetadataPool $metadataPool
      * @param \Magento\Framework\EntityManager\Sequence\SequenceRegistry $sequenceRegistry
@@ -115,7 +104,6 @@ class EntityGenerator
      */
     public function __construct(
         \Magento\Setup\Model\FixtureGenerator\SqlCollector $sqlCollector,
-        \Magento\Eav\Model\ResourceModel\AttributeLoader $attributeLoader,
         \Magento\Framework\App\ResourceConnection $resourceConnection,
         \Magento\Framework\EntityManager\MetadataPool $metadataPool,
         \Magento\Framework\EntityManager\Sequence\SequenceRegistry $sequenceRegistry,
@@ -125,7 +113,6 @@ class EntityGenerator
     ) {
         $this->sqlCollector = $sqlCollector;
         $this->resourceConnection = $resourceConnection;
-        $this->attributeLoader = $attributeLoader;
         $this->metadataPool = $metadataPool;
         $this->sequenceRegistry = $sequenceRegistry;
         $this->customTableMap = $customTableMap;
@@ -142,7 +129,7 @@ class EntityGenerator
      * @throws LocalizedException
      * @return void
      */
-    public function generate(TemplateEntityGeneratorInterface $entityGenerator, $entitiesAmount, callable $fixture)
+    /*public function generate(TemplateEntityGeneratorInterface $entityGenerator, $entitiesAmount, callable $fixture)
     {
         $this->getConnection()->beginTransaction();
         try {
@@ -172,7 +159,7 @@ class EntityGenerator
             }
         }
         gc_enable();
-    }
+    }*/
 
     /**
      * Provide list of sql queries for create a new entity
@@ -182,7 +169,7 @@ class EntityGenerator
      * @param callable $fixtureMap
      * @return array
      */
-    private function getSqlQueries($entity, $entityNumber, callable $fixtureMap)
+   /* private function getSqlQueries($entity, $entityNumber, callable $fixtureMap)
     {
         $metadata = $this->getEntityMetadata();
         $this->initializeMapping();
@@ -223,7 +210,7 @@ class EntityGenerator
         }
 
         return $sql;
-    }
+    }*/
 
     /**
      * If custom handler passed for table then override binds with it
@@ -253,7 +240,7 @@ class EntityGenerator
      * @return void
      * @throws LocalizedException
      */
-    private function saveEntities(array &$map)
+   /* private function saveEntities(array &$map)
     {
         $this->getConnection()->beginTransaction();
         try {
@@ -270,7 +257,7 @@ class EntityGenerator
         }
 
         $map = [];
-    }
+    }*/
 
     /**
      * @return \Magento\Framework\DB\Adapter\AdapterInterface
@@ -301,14 +288,14 @@ class EntityGenerator
      *
      * @return string
      */
-    private function getEntityTable()
+   /* private function getEntityTable()
     {
         if (null === $this->entityTable) {
             $this->entityTable = $this->getEntityMetadata()->getEntityTable();
         }
 
         return $this->entityTable;
-    }
+    }*/
 
     /**
      * Get field name for specific table where stored link to primary key of entity table
@@ -318,7 +305,7 @@ class EntityGenerator
      * @return string
      * @throws ValidatorException
      */
-    private function getEntityIdField($table)
+   /* private function getEntityIdField($table)
     {
         if (!isset($this->tableToEntityIdMap[$table])) {
             $foreignKey = null;
@@ -343,7 +330,7 @@ class EntityGenerator
         }
 
         return $this->tableToEntityIdMap[$table];
-    }
+    }*/
 
     /**
      * Initialize map between table and entity id and convert table name to valid table name
@@ -351,7 +338,7 @@ class EntityGenerator
      * @return void
      * @throws ValidatorException
      */
-    private function initializeMapping()
+   /* private function initializeMapping()
     {
         if (!$this->isMappingInitialized) {
             $this->isMappingInitialized = true;
@@ -383,14 +370,14 @@ class EntityGenerator
                 $this->tableToEntityIdMap[$table] = current($ddl)['COLUMN_NAME'];
             }
         }
-    }
+    }*/
 
     /**
      * Rebind table name with real name, initialize table map for tables without foreign key to entity table
      *
      * @return void
      */
-    private function initCustomTables()
+    /*private function initCustomTables()
     {
         $customTableData = [
             'entity_id_field' => null,
@@ -407,14 +394,14 @@ class EntityGenerator
             }
         }
         $this->customTableMap = $customTableMap;
-    }
+    }*/
 
     /**
      * Get EAV attributes metadata for non-static attributes
      *
      * @return array
      */
-    private function getAttributesMetadata()
+   /* private function getAttributesMetadata()
     {
         if (null === $this->attributes) {
             foreach ($this->attributeLoader->getAttributes($this->entityType) as $attribute) {
@@ -430,7 +417,7 @@ class EntityGenerator
         }
 
         return $this->attributes;
-    }
+    }*/
 
     /**
      * Set new bind value for new record
@@ -443,7 +430,7 @@ class EntityGenerator
      *
      * @return void
      */
-    private function setNewBindValue($entityId, $entityNumber, $table, array &$bind, array $fixtureMap)
+   /* private function setNewBindValue($entityId, $entityNumber, $table, array &$bind, array $fixtureMap)
     {
         $attributes = $this->getAttributesMetadata();
         if (isset($attributes[$table])) {
@@ -466,7 +453,7 @@ class EntityGenerator
                 $bind[$field] = $this->getFixtureValue($fixtureField, $entityId, $entityNumber, $fixtureMap);
             }
         }
-    }
+    }*/
 
     /**
      * @param string $fixtureField
@@ -475,11 +462,11 @@ class EntityGenerator
      * @param array $fixtureMap
      * @return mixed|string
      */
-    private function getFixtureValue($fixtureField, $entityId, $entityNumber, array $fixtureMap)
+    /*private function getFixtureValue($fixtureField, $entityId, $entityNumber, array $fixtureMap)
     {
         $fixture = isset($fixtureMap[$fixtureField]) ? $fixtureMap[$fixtureField] : null;
         return $fixture ? $this->getBindValue($fixture, $entityId, $entityNumber) : '';
-    }
+    }*/
 
     /**
      * @param callable|mixed $fixture
@@ -487,12 +474,12 @@ class EntityGenerator
      * @param int $entityNumber
      * @return string
      */
-    private function getBindValue($fixture, $entityId, $entityNumber)
+  /*  private function getBindValue($fixture, $entityId, $entityNumber)
     {
         $bindValue = is_callable($fixture)
             ? call_user_func($fixture, $entityId, $entityNumber)
             : $fixture;
 
         return is_array($bindValue) ? array_shift($bindValue) : $bindValue;
-    }
+    }*/
 }

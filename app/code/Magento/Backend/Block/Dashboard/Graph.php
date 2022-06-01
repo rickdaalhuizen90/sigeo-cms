@@ -103,17 +103,15 @@ class Graph extends \Magento\Backend\Block\Dashboard\AbstractDashboard
 
     /**
      * @param \Magento\Backend\Block\Template\Context $context
-     * @param \Magento\Reports\Model\ResourceModel\Order\CollectionFactory $collectionFactory
      * @param \Magento\Backend\Helper\Dashboard\Data $dashboardData
      * @param array $data
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
-        \Magento\Reports\Model\ResourceModel\Order\CollectionFactory $collectionFactory,
         \Magento\Backend\Helper\Dashboard\Data $dashboardData,
         array $data = []
     ) {
-        parent::__construct($context, $collectionFactory, $data);
+        parent::__construct($context, $data);
         $this->_dashboardData = $dashboardData;
     }
 
@@ -172,199 +170,6 @@ class Graph extends \Magento\Backend\Block\Dashboard\AbstractDashboard
     public function getAllSeries()
     {
         return $this->_allSeries;
-    }
-
-    /**
-     * Get chart url
-     *
-     * @param bool $directUrl
-     * @return string
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-     * @SuppressWarnings(PHPMD.NPathComplexity)
-     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
-     */
-    public function getChartUrl($directUrl = true)
-    {
-        $params = [
-            'cht' => 'lc',
-            'chls' => '7',
-            'chf' => 'bg,s,f4f4f4|c,lg,90,ffffff,0.1,ededed,0',
-            'chm' => 'B,f4d4b2,0,0,0',
-            'chco' => 'db4814',
-            'chxs' => '0,0,11|1,0,11',
-            'chma' => '15,15,15,15'
-        ];
-
-        $this->_allSeries = $this->getRowsData($this->_dataRows);
-
-        foreach ($this->_axisMaps as $axis => $attr) {
-            $this->setAxisLabels($axis, $this->getRowsData($attr, true));
-        }
-
-        $timezoneLocal = $this->_localeDate->getConfigTimezone();
-
-        /** @var \DateTime $dateStart */
-        /** @var \DateTime $dateEnd */
-        list($dateStart, $dateEnd) = $this->_collectionFactory->create()->getDateRange(
-            $this->getDataHelper()->getParam('period'),
-            '',
-            '',
-            true
-        );
-
-        $dateStart->setTimezone(new \DateTimeZone($timezoneLocal));
-        $dateEnd->setTimezone(new \DateTimeZone($timezoneLocal));
-
-        if ($this->getDataHelper()->getParam('period') == '24h') {
-            $dateEnd->modify('-1 hour');
-        } else {
-            $dateEnd->setTime(23, 59, 59);
-            $dateStart->setTime(0, 0, 0);
-        }
-
-        $dates = [];
-        $datas = [];
-
-        while ($dateStart <= $dateEnd) {
-            switch ($this->getDataHelper()->getParam('period')) {
-                case '7d':
-                case '1m':
-                    $d = $dateStart->format('Y-m-d');
-                    $dateStart->modify('+1 day');
-                    break;
-                case '1y':
-                case '2y':
-                    $d = $dateStart->format('Y-m');
-                    $dateStart->modify('first day of next month');
-                    break;
-                default:
-                    $d = $dateStart->format('Y-m-d H:00');
-                    $dateStart->modify('+1 hour');
-            }
-            foreach ($this->getAllSeries() as $index => $serie) {
-                if (in_array($d, $this->_axisLabels['x'])) {
-                    $datas[$index][] = (double)array_shift($this->_allSeries[$index]);
-                } else {
-                    $datas[$index][] = 0;
-                }
-            }
-            $dates[] = $d;
-        }
-
-        /**
-         * setting skip step
-         */
-        if (count($dates) > 8 && count($dates) < 15) {
-            $c = 1;
-        } else {
-            if (count($dates) >= 15) {
-                $c = 2;
-            } else {
-                $c = 0;
-            }
-        }
-        /**
-         * skipping some x labels for good reading
-         */
-        $i = 0;
-        foreach ($dates as $k => $d) {
-            if ($i == $c) {
-                $dates[$k] = $d;
-                $i = 0;
-            } else {
-                $dates[$k] = '';
-                $i++;
-            }
-        }
-
-        $this->_axisLabels['x'] = $dates;
-        $this->_allSeries = $datas;
-
-        // Image-Charts Awesome data format values
-        $params['chd'] = "a:";
-        $dataDelimiter = ",";
-        $dataSetdelimiter = "|";
-        $dataMissing = "_";
-
-        // process each string in the array, and find the max length
-        $localmaxvalue = [0];
-        $localminvalue = [0];
-        foreach ($this->getAllSeries() as $index => $serie) {
-            $localmaxvalue[$index] = max($serie);
-            $localminvalue[$index] = min($serie);
-        }
-
-        $maxvalue = max($localmaxvalue);
-        $minvalue = min($localminvalue);
-
-        // default values
-        $miny = 0;
-        $maxy = 0;
-        $yorigin = 0;
-        $xAxis = 'x';
-        $xAxisIndex = 0;
-        $yAxisIndex = 1;
-
-        if ($minvalue >= 0 && $maxvalue >= 0) {
-            if ($maxvalue > 10) {
-                $p = pow(10, $this->_getPow((int)$maxvalue));
-                $maxy = ceil($maxvalue / $p) * $p;
-                $yRange = "$yAxisIndex,$miny,$maxy,$p";
-            } else {
-                $maxy = ceil($maxvalue + 1);
-                $yRange = "$yAxisIndex,$miny,$maxy,1";
-            }
-            $params['chxr'] = $yRange;
-            $yorigin = 0;
-        }
-
-        $chartdata = [];
-
-        foreach ($this->getAllSeries() as $index => $serie) {
-            $thisdataarray = $serie;
-            $count = count($thisdataarray);
-            for ($j = 0; $j < $count; $j++) {
-                $currentvalue = $thisdataarray[$j];
-                if (is_numeric($currentvalue)) {
-                    $ylocation = $yorigin + $currentvalue;
-                    $chartdata[] = $ylocation . $dataDelimiter;
-                } else {
-                    $chartdata[] = $dataMissing . $dataDelimiter;
-                }
-            }
-            $chartdata[] = $dataSetdelimiter;
-        }
-        $buffer = implode('', $chartdata);
-
-        $buffer = rtrim($buffer, $dataSetdelimiter);
-        $buffer = rtrim($buffer, $dataDelimiter);
-        $buffer = str_replace($dataDelimiter . $dataSetdelimiter, $dataSetdelimiter, $buffer);
-
-        $params['chd'] .= $buffer;
-
-        if (count($this->_axisLabels) > 0) {
-            $params['chxt'] = implode(',', array_keys($this->_axisLabels));
-            $this->formatAxisLabelDate($xAxis, (string)$timezoneLocal);
-            $customAxisLabels = $xAxisIndex . ":|" . implode('|', $this->_axisLabels[$xAxis]);
-            $params['chxl'] = $customAxisLabels . $dataSetdelimiter;
-        }
-
-        // chart size
-        $params['chs'] = $this->getWidth() . 'x' . $this->getHeight();
-
-        // return the encoded data
-        if ($directUrl) {
-            $p = [];
-            foreach ($params as $name => $value) {
-                $p[] = $name . '=' . urlencode($value);
-            }
-            return (string)self::API_URL . '?' . implode('&', $p);
-        }
-        $gaData = urlencode(base64_encode(json_encode($params)));
-        $gaHash = $this->_dashboardData->getChartDataHash($gaData);
-        $params = ['ga' => $gaData, 'h' => $gaHash];
-        return $this->getUrl('adminhtml/*/tunnel', ['_query' => $params]);
     }
 
     /**

@@ -9,13 +9,12 @@ namespace Magento\Backend\Controller\Adminhtml\Dashboard;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Stdlib\DateTime\Filter\Date;
-use Magento\Reports\Controller\Adminhtml\Report\Statistics;
 use Psr\Log\LoggerInterface;
 
 /**
  * Refresh Dashboard statistics action.
  */
-class RefreshStatistics extends Statistics implements HttpPostActionInterface
+class RefreshStatistics extends \Magento\Backend\App\Action implements HttpPostActionInterface
 {
     /**
      * @var LoggerInterface
@@ -34,7 +33,7 @@ class RefreshStatistics extends Statistics implements HttpPostActionInterface
         array $reportTypes,
         LoggerInterface $logger
     ) {
-        parent::__construct($context, $dateFilter, $reportTypes);
+        parent::__construct($context);
         $this->logger = $logger;
     }
 
@@ -45,16 +44,16 @@ class RefreshStatistics extends Statistics implements HttpPostActionInterface
      */
     public function execute()
     {
-        try {
-            $collectionsNames = array_values($this->reportTypes);
-            foreach ($collectionsNames as $collectionName) {
-                $this->_objectManager->create($collectionName)->aggregate();
-            }
-            $this->messageManager->addSuccessMessage(__('We updated lifetime statistic.'));
-        } catch (\Exception $e) {
-            $this->messageManager->addErrorMessage(__('We can\'t refresh lifetime statistics.'));
-            $this->logger->critical($e);
-        }
+        /*  try {
+              $collectionsNames = array_values($this->reportTypes);
+              foreach ($collectionsNames as $collectionName) {
+                  $this->_objectManager->create($collectionName)->aggregate();
+              }
+              $this->messageManager->addSuccessMessage(__('We updated lifetime statistic.'));
+          } catch (\Exception $e) {
+              $this->messageManager->addErrorMessage(__('We can\'t refresh lifetime statistics.'));
+              $this->logger->critical($e);
+          }*/
 
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();

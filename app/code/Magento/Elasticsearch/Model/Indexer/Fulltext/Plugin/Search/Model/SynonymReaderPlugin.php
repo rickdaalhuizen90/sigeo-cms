@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Magento\Elasticsearch\Model\Indexer\Fulltext\Plugin\Search\Model;
 
-use Magento\CatalogSearch\Model\Indexer\Fulltext;
+use Magento\Elasticsearch\Model\Indexer\Fulltext;
 use Magento\Framework\Indexer\IndexerRegistry;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Search\Model\ResourceModel\SynonymGroup;

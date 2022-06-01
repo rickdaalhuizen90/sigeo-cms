@@ -18,17 +18,17 @@ class ImagesGenerator
     private $filesystem;
 
     /**
-     * @var \Magento\Catalog\Model\Product\Media\Config
+     * @var \Magento\MediaStorage\Model\Config\Media\Config
      */
     private $mediaConfig;
 
     /**
      * @param \Magento\Framework\Filesystem $filesystem
-     * @param \Magento\Catalog\Model\Product\Media\Config $mediaConfig
+     * @param \Magento\MediaStorage\Model\Config\Media\Config $mediaConfig
      */
     public function __construct(
         \Magento\Framework\Filesystem $filesystem,
-        \Magento\Catalog\Model\Product\Media\Config $mediaConfig
+        \Magento\MediaStorage\Model\Config\Media\Config $mediaConfig
     ) {
         $this->filesystem = $filesystem;
         $this->mediaConfig = $mediaConfig;

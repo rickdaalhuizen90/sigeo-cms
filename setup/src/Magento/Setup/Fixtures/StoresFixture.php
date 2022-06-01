@@ -6,8 +6,6 @@
 
 namespace Magento\Setup\Fixtures;
 
-use Magento\Catalog\Model\Category;
-use Magento\Catalog\Model\CategoryFactory;
 use Magento\Framework\App\Config\Storage\Writer;
 use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\Locale\Config;
@@ -138,11 +136,6 @@ class StoresFixture extends Fixture
     private $eventManager;
 
     /**
-     * @var CategoryFactory
-     */
-    private $categoryFactory;
-
-    /**
      * @var Config
      */
     private $localeConfig;
@@ -152,7 +145,6 @@ class StoresFixture extends Fixture
      * @param FixtureModel $fixtureModel
      * @param StoreManager $storeManager
      * @param ManagerInterface $eventManager
-     * @param CategoryFactory $categoryFactory
      * @param Config $localeConfig
      * @param Writer $scopeConfig
      */
@@ -160,14 +152,12 @@ class StoresFixture extends Fixture
         FixtureModel $fixtureModel,
         StoreManager $storeManager,
         ManagerInterface $eventManager,
-        CategoryFactory $categoryFactory,
         Config $localeConfig,
         Writer $scopeConfig
     ) {
         parent::__construct($fixtureModel);
         $this->storeManager = $storeManager;
         $this->eventManager = $eventManager;
-        $this->categoryFactory = $categoryFactory;
         $this->localeConfig = $localeConfig;
         $this->scopeConfig = $scopeConfig;
     }
@@ -260,7 +250,6 @@ class StoresFixture extends Fixture
                     'website_id' => $websiteId,
                     'name' => $storeGroupName,
                     'code' => $storeGroupCode,
-                    'root_category_id' => $this->getStoreCategoryId($storeGroupName),
                 ]
             );
             $storeGroup->save();
@@ -328,7 +317,7 @@ class StoresFixture extends Fixture
      * @param string $storeGroupName
      * @return int
      */
-    private function getStoreCategoryId($storeGroupName)
+   /* private function getStoreCategoryId($storeGroupName)
     {
         if ($this->singleRootCategory) {
             return $this->getDefaultCategoryId();
@@ -346,7 +335,7 @@ class StoresFixture extends Fixture
 
             return $category->getId();
         }
-    }
+    }*/
 
     /**
      * {@inheritdoc}
@@ -373,11 +362,11 @@ class StoresFixture extends Fixture
      *
      * @return int
      */
-    private function getDefaultCategoryId()
+   /* private function getDefaultCategoryId()
     {
         if (null === $this->defaultParentCategoryId) {
             $this->defaultParentCategoryId = $this->storeManager->getStore()->getRootCategoryId();
         }
         return $this->defaultParentCategoryId;
-    }
+    }*/
 }

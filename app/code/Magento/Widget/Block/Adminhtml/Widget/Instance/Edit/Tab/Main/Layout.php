@@ -6,11 +6,11 @@
 
 namespace Magento\Widget\Block\Adminhtml\Widget\Instance\Edit\Tab\Main;
 
-use Magento\Framework\Data\Form\Element\AbstractElement;
-use Magento\Framework\App\ObjectManager;
-use Magento\Framework\Serialize\Serializer\Json;
-use Magento\Framework\Data\Form\Element\Renderer\RendererInterface;
 use Magento\Backend\Block\Template;
+use Magento\Framework\App\ObjectManager;
+use Magento\Framework\Data\Form\Element\AbstractElement;
+use Magento\Framework\Data\Form\Element\Renderer\RendererInterface;
+use Magento\Framework\Serialize\Serializer\Json;
 
 /**
  * Widget Instance page groups (predefined layouts group) to display on
@@ -30,28 +30,20 @@ class Layout extends Template implements RendererInterface
     protected $_template = 'Magento_Widget::instance/edit/layout.phtml';
 
     /**
-     * @var \Magento\Catalog\Model\Product\Type
-     */
-    protected $_productType;
-
-    /**
      * @var Json
      */
     private $serializer;
 
     /**
      * @param \Magento\Backend\Block\Template\Context $context
-     * @param \Magento\Catalog\Model\Product\Type $productType
      * @param array $data
      * @param Json|null $serializer
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
-        \Magento\Catalog\Model\Product\Type $productType,
         array $data = [],
         Json $serializer = null
     ) {
-        $this->_productType = $productType;
         $this->serializer = $serializer ?: ObjectManager::getInstance()->get(Json::class);
         parent::__construct($context, $data);
     }
@@ -158,39 +150,39 @@ class Layout extends Template implements RendererInterface
      * - Categories (anchor and not anchor)
      * - Products (product types depend on configuration)
      * - Generic (predefined) pages (all pages and single layout update)
-     *
+     * @todo refactor
      * @return array
      */
     protected function _getDisplayOnOptions()
     {
         $options = [];
-        $options[] = ['value' => '', 'label' => $this->escapeHtmlAttr(__('-- Please Select --'))];
-        $options[] = [
-            'label' => __('Categories'),
-            'value' => [
-                ['value' => 'anchor_categories', 'label' => $this->escapeHtmlAttr(__('Anchor Categories'))],
-                ['value' => 'notanchor_categories', 'label' => $this->escapeHtmlAttr(__('Non-Anchor Categories'))],
-            ],
-        ];
-        foreach ($this->_productType->getTypes() as $typeId => $type) {
-            $productsOptions[] = [
-                'value' => $typeId . '_products',
-                'label' => $this->escapeHtmlAttr($type['label']),
-            ];
-        }
-        array_unshift(
-            $productsOptions,
-            ['value' => 'all_products', 'label' => $this->escapeHtmlAttr(__('All Product Types'))]
-        );
-        $options[] = ['label' => $this->escapeHtmlAttr(__('Products')), 'value' => $productsOptions];
-        $options[] = [
-            'label' => $this->escapeHtmlAttr(__('Generic Pages')),
-            'value' => [
-                ['value' => 'all_pages', 'label' => $this->escapeHtmlAttr(__('All Pages'))],
-                ['value' => 'pages', 'label' => $this->escapeHtmlAttr(__('Specified Page'))],
-                ['value' => 'page_layouts', 'label' => $this->escapeHtmlAttr(__('Page Layouts'))],
-            ],
-        ];
+        /* $options[] = ['value' => '', 'label' => $this->escapeHtmlAttr(__('-- Please Select --'))];
+         $options[] = [
+             'label' => __('Categories'),
+             'value' => [
+                 ['value' => 'anchor_categories', 'label' => $this->escapeHtmlAttr(__('Anchor Categories'))],
+                 ['value' => 'notanchor_categories', 'label' => $this->escapeHtmlAttr(__('Non-Anchor Categories'))],
+             ],
+         ];
+         foreach ($this->_productType->getTypes() as $typeId => $type) {
+             $productsOptions[] = [
+                 'value' => $typeId . '_products',
+                 'label' => $this->escapeHtmlAttr($type['label']),
+             ];
+         }
+         array_unshift(
+             $productsOptions,
+             ['value' => 'all_products', 'label' => $this->escapeHtmlAttr(__('All Product Types'))]
+         );
+         $options[] = ['label' => $this->escapeHtmlAttr(__('Products')), 'value' => $productsOptions];
+         $options[] = [
+             'label' => $this->escapeHtmlAttr(__('Generic Pages')),
+             'value' => [
+                 ['value' => 'all_pages', 'label' => $this->escapeHtmlAttr(__('All Pages'))],
+                 ['value' => 'pages', 'label' => $this->escapeHtmlAttr(__('Specified Page'))],
+                 ['value' => 'page_layouts', 'label' => $this->escapeHtmlAttr(__('Page Layouts'))],
+             ],
+         ];*/
         return $options;
     }
 
@@ -227,20 +219,7 @@ class Layout extends Template implements RendererInterface
             'is_anchor_only' => '',
             'product_type_id' => '',
         ];
-        foreach ($this->_productType->getTypes() as $typeId => $type) {
-            $container[$typeId] = [
-                'label' => 'Products',
-                'code' => 'products',
-                'name' => $typeId . '_products',
-                'layout_handle' => str_replace(
-                    '{{TYPE}}',
-                    $typeId,
-                    \Magento\Widget\Model\Widget\Instance::PRODUCT_TYPE_LAYOUT_HANDLE
-                ),
-                'is_anchor_only' => '',
-                'product_type_id' => $typeId,
-            ];
-        }
+
         return $container;
     }
 

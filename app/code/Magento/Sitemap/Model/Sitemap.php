@@ -126,16 +126,6 @@ class Sitemap extends \Magento\Framework\Model\AbstractModel implements \Magento
     protected $_escaper;
 
     /**
-     * @var \Magento\Sitemap\Model\ResourceModel\Catalog\CategoryFactory
-     */
-    protected $_categoryFactory;
-
-    /**
-     * @var \Magento\Sitemap\Model\ResourceModel\Catalog\ProductFactory
-     */
-    protected $_productFactory;
-
-    /**
      * @var \Magento\Sitemap\Model\ResourceModel\Cms\PageFactory
      */
     protected $_cmsFactory;
@@ -213,8 +203,6 @@ class Sitemap extends \Magento\Framework\Model\AbstractModel implements \Magento
      * @param \Magento\Framework\Escaper $escaper
      * @param \Magento\Sitemap\Helper\Data $sitemapData
      * @param \Magento\Framework\Filesystem $filesystem
-     * @param ResourceModel\Catalog\CategoryFactory $categoryFactory
-     * @param ResourceModel\Catalog\ProductFactory $productFactory
      * @param ResourceModel\Cms\PageFactory $cmsFactory
      * @param \Magento\Framework\Stdlib\DateTime\DateTime $modelDate
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
@@ -235,8 +223,6 @@ class Sitemap extends \Magento\Framework\Model\AbstractModel implements \Magento
         \Magento\Framework\Escaper $escaper,
         \Magento\Sitemap\Helper\Data $sitemapData,
         \Magento\Framework\Filesystem $filesystem,
-        \Magento\Sitemap\Model\ResourceModel\Catalog\CategoryFactory $categoryFactory,
-        \Magento\Sitemap\Model\ResourceModel\Catalog\ProductFactory $productFactory,
         \Magento\Sitemap\Model\ResourceModel\Cms\PageFactory $cmsFactory,
         \Magento\Framework\Stdlib\DateTime\DateTime $modelDate,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
@@ -254,8 +240,6 @@ class Sitemap extends \Magento\Framework\Model\AbstractModel implements \Magento
         $this->_sitemapData = $sitemapData;
         $this->filesystem = $filesystem;
         $this->_directory = $filesystem->getDirectoryWrite(DirectoryList::PUB);
-        $this->_categoryFactory = $categoryFactory;
-        $this->_productFactory = $productFactory;
         $this->_cmsFactory = $cmsFactory;
         $this->_dateModel = $modelDate;
         $this->_storeManager = $storeManager;
@@ -324,26 +308,6 @@ class Sitemap extends \Magento\Framework\Model\AbstractModel implements \Magento
         /** @var $helper \Magento\Sitemap\Helper\Data */
         $helper = $this->_sitemapData;
         $storeId = $this->getStoreId();
-
-        $this->addSitemapItem(
-            new DataObject(
-                [
-                    'changefreq' => $helper->getCategoryChangefreq($storeId),
-                    'priority' => $helper->getCategoryPriority($storeId),
-                    'collection' => $this->_categoryFactory->create()->getCollection($storeId),
-                ]
-            )
-        );
-
-        $this->addSitemapItem(
-            new DataObject(
-                [
-                    'changefreq' => $helper->getProductChangefreq($storeId),
-                    'priority' => $helper->getProductPriority($storeId),
-                    'collection' => $this->_productFactory->create()->getCollection($storeId),
-                ]
-            )
-        );
 
         $this->addSitemapItem(
             new DataObject(

@@ -8,8 +8,6 @@ namespace Magento\Elasticsearch\Model\Adapter;
 
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 use Magento\AdvancedSearch\Model\Client\ClientInterface;
-use Magento\Catalog\Api\ProductAttributeRepositoryInterface;
-use Magento\Elasticsearch\Model\Adapter\FieldMapper\Product\FieldProvider\StaticField;
 use Magento\Elasticsearch\Model\Adapter\Index\BuilderInterface;
 use Magento\Elasticsearch\Model\Adapter\Index\IndexNameResolver;
 use Magento\Elasticsearch\Model\Config;
@@ -95,16 +93,6 @@ class Elasticsearch
     private $indexByCode = [];
 
     /**
-     * @var ProductAttributeRepositoryInterface
-     */
-    private $productAttributeRepository;
-
-    /**
-     * @var StaticField
-     */
-    private $staticFieldProvider;
-
-    /**
      * @var ArrayManager
      */
     private $arrayManager;
@@ -118,8 +106,6 @@ class Elasticsearch
      * @param Index\IndexNameResolver $indexNameResolver
      * @param BatchDataMapperInterface $batchDocumentDataMapper
      * @param array $options
-     * @param ProductAttributeRepositoryInterface|null $productAttributeRepository
-     * @param StaticField|null $staticFieldProvider
      * @param ArrayManager|null $arrayManager
      * @throws LocalizedException
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
@@ -133,8 +119,6 @@ class Elasticsearch
         IndexNameResolver $indexNameResolver,
         BatchDataMapperInterface $batchDocumentDataMapper,
         $options = [],
-        ProductAttributeRepositoryInterface $productAttributeRepository = null,
-        StaticField $staticFieldProvider = null,
         ArrayManager $arrayManager = null
     ) {
         $this->connectionManager = $connectionManager;
@@ -144,10 +128,6 @@ class Elasticsearch
         $this->logger = $logger;
         $this->indexNameResolver = $indexNameResolver;
         $this->batchDocumentDataMapper = $batchDocumentDataMapper;
-        $this->productAttributeRepository = $productAttributeRepository ?:
-            ObjectManager::getInstance()->get(ProductAttributeRepositoryInterface::class);
-        $this->staticFieldProvider = $staticFieldProvider ?:
-            ObjectManager::getInstance()->get(StaticField::class);
         $this->arrayManager = $arrayManager ?:
             ObjectManager::getInstance()->get(ArrayManager::class);
 
@@ -415,14 +395,6 @@ class Elasticsearch
             return $this;
         }
 
-        try {
-            $this->updateMapping($attributeCode, $indexName);
-        } catch (Missing404Exception $e) {
-            unset($this->indexByCode[$mappedIndexerId . '_' . $storeId]);
-            $indexName = $this->getIndexFromAlias($storeId, $mappedIndexerId);
-            $this->updateMapping($attributeCode, $indexName);
-        }
-
         return $this;
     }
 
@@ -525,32 +497,5 @@ class Elasticsearch
             }
         }
         return $count + self::MAPPING_TOTAL_FIELDS_BUFFER_LIMIT;
-    }
-
-    /**
-     * Perform index mapping update
-     *
-     * @param string $attributeCode
-     * @param string $indexName
-     * @return void
-     */
-    private function updateMapping(string $attributeCode, string $indexName): void
-    {
-        $attribute = $this->productAttributeRepository->get($attributeCode);
-        $newAttributeMapping = $this->staticFieldProvider->getField($attribute);
-        $mappedAttributes = $this->getMappedAttributes($indexName);
-        $attrToUpdate = array_diff_key($newAttributeMapping, $mappedAttributes);
-        if (!empty($attrToUpdate)) {
-            $settings['index']['mapping']['total_fields']['limit'] = $this
-                ->getMappingTotalFieldsLimit(array_merge($mappedAttributes, $attrToUpdate));
-            $this->client->putIndexSettings($indexName, ['settings' => $settings]);
-
-            $this->client->addFieldsMapping(
-                $attrToUpdate,
-                $indexName,
-                $this->clientConfig->getEntityType()
-            );
-            $this->setMappedAttributes($indexName, $attrToUpdate);
-        }
     }
 }

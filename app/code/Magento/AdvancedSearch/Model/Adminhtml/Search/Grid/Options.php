@@ -24,23 +24,15 @@ class Options implements \Magento\Framework\Option\ArrayInterface
     protected $_registryManager;
 
     /**
-     * @var \Magento\AdvancedSearch\Model\ResourceModel\Recommendations $_searchResourceModel
-     */
-    protected $_searchResourceModel;
-
-    /**
      * @param \Magento\Framework\App\RequestInterface $request
      * @param \Magento\Framework\Registry $registry
-     * @param \Magento\AdvancedSearch\Model\ResourceModel\Recommendations $searchResourceModel
      */
     public function __construct(
         \Magento\Framework\App\RequestInterface $request,
-        \Magento\Framework\Registry $registry,
-        \Magento\AdvancedSearch\Model\ResourceModel\Recommendations $searchResourceModel
+        \Magento\Framework\Registry $registry
     ) {
         $this->_request = $request;
         $this->_registryManager = $registry;
-        $this->_searchResourceModel = $searchResourceModel;
     }
 
     /**
@@ -52,9 +44,7 @@ class Options implements \Magento\Framework\Option\ArrayInterface
 
         $currentQueryId = $this->_registryManager->registry('current_catalog_search')->getId();
         $queryIds = [];
-        if ($queries === null && !empty($currentQueryId)) {
-            $queryIds = $this->_searchResourceModel->getRelatedQueries($currentQueryId);
-        }
+
         return $queryIds;
     }
 }

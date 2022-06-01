@@ -12,8 +12,6 @@ use Magento\Elasticsearch\SearchAdapter\ConnectionManager;
 use Magento\Elasticsearch\Model\Adapter\FieldMapperInterface;
 use Magento\Elasticsearch\Model\Config;
 use Magento\Elasticsearch\SearchAdapter\SearchIndexNameResolver;
-use Magento\CatalogSearch\Model\Indexer\Fulltext;
-
 /**
  * Aggregate price intervals for search query result.
  */
@@ -219,7 +217,6 @@ class Interval implements IntervalInterface
     private function prepareBaseRequestQuery($from = null, $to = null): array
     {
         $requestQuery = [
-            'index' => $this->searchIndexNameResolver->getIndexName($this->storeId, Fulltext::INDEXER_ID),
             'type' => $this->clientConfig->getEntityType(),
             'body' => [
                 'stored_fields' => [

@@ -10,12 +10,9 @@ use Magento\Framework\Search\Request\IndexScopeResolverInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Model\ResourceModel\Db\Context;
 use Magento\Framework\EntityManager\MetadataPool;
-use Magento\Catalog\Api\Data\CategoryInterface;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Search\Request\Dimension;
-use Magento\Catalog\Model\Indexer\Category\Product\AbstractAction;
 use Magento\Framework\Search\Request\IndexScopeResolverInterface as TableResolver;
-use Magento\Catalog\Model\Indexer\Product\Price\DimensionCollectionFactory;
 use Magento\Store\Model\Indexer\WebsiteDimensionProvider;
 
 /**
@@ -67,15 +64,13 @@ class Index extends AbstractDb
         StoreManagerInterface $storeManager,
         MetadataPool $metadataPool,
         $connectionName = null,
-        TableResolver $tableResolver = null,
-        DimensionCollectionFactory $dimensionCollectionFactory = null
+        TableResolver $tableResolver = null
     ) {
         parent::__construct($context, $connectionName);
         $this->storeManager = $storeManager;
         $this->metadataPool = $metadataPool;
         $this->tableResolver = $tableResolver ?: ObjectManager::getInstance()->get(IndexScopeResolverInterface::class);
-        $this->dimensionCollectionFactory = $dimensionCollectionFactory
-            ?: ObjectManager::getInstance()->get(DimensionCollectionFactory::class);
+
     }
 
     /**
@@ -87,67 +82,6 @@ class Index extends AbstractDb
      */
     protected function _construct()
     {
-    }
-
-    /**
-     * Return array of price data per customer and website by products
-     *
-     * @param null|array $productIds
-     * @return array
-     * @since 100.1.0
-     */
-    protected function _getCatalogProductPriceData($productIds = null)
-    {
-        $connection = $this->getConnection();
-        $catalogProductIndexPriceSelect = [];
-
-        foreach ($this->dimensionCollectionFactory->create() as $dimensions) {
-            if (!isset($dimensions[WebsiteDimensionProvider::DIMENSION_NAME]) ||
-                $this->websiteId === null ||
-                $dimensions[WebsiteDimensionProvider::DIMENSION_NAME]->getValue() === $this->websiteId) {
-                $select = $connection->select()->from(
-                    $this->tableResolver->resolve('catalog_product_index_price', $dimensions),
-                    ['entity_id', 'customer_group_id', 'website_id', 'min_price']
-                );
-                if ($productIds) {
-                    $select->where('entity_id IN (?)', $productIds);
-                }
-                $catalogProductIndexPriceSelect[] = $select;
-            }
-        }
-
-        $catalogProductIndexPriceUnionSelect = $connection->select()->union($catalogProductIndexPriceSelect);
-
-        $result = [];
-        foreach ($connection->fetchAll($catalogProductIndexPriceUnionSelect) as $row) {
-            $result[$row['website_id']][$row['entity_id']][$row['customer_group_id']] =
-                round((float) $row['min_price'], 2);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Retrieve price data for product
-     *
-     * @param null|array $productIds
-     * @param int $storeId
-     * @return array
-     * @since 100.1.0
-     */
-    public function getPriceIndexData($productIds, $storeId)
-    {
-        $websiteId = $this->storeManager->getStore($storeId)->getWebsiteId();
-
-        $this->websiteId = $websiteId;
-        $priceProductsIndexData = $this->_getCatalogProductPriceData($productIds);
-        $this->websiteId = null;
-
-        if (!isset($priceProductsIndexData[$websiteId])) {
-            return [];
-        }
-
-        return $priceProductsIndexData[$websiteId];
     }
 
     /**

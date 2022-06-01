@@ -9,8 +9,6 @@ namespace Magento\Elasticsearch\Model\Indexer\Plugin;
 
 use Magento\Elasticsearch\Model\Config;
 use Magento\Framework\Indexer\Config\DependencyInfoProvider as Provider;
-use Magento\CatalogSearch\Model\Indexer\Fulltext as CatalogSearchFulltextIndexer;
-use Magento\CatalogInventory\Model\Indexer\Stock\Processor as CatalogInventoryStockIndexer;
 
 /**
  * Plugin for maintenance catalog search index dependency on stock index.
@@ -47,10 +45,6 @@ class DependencyUpdaterPlugin
      */
     public function afterGetIndexerIdsToRunBefore(Provider $provider, array $dependencies, string $indexerId): array
     {
-        if ($this->isFilteringNeeded($indexerId, CatalogSearchFulltextIndexer::INDEXER_ID)) {
-            $dependencies = array_diff($dependencies, [CatalogInventoryStockIndexer::INDEXER_ID]);
-        }
-
         return $dependencies;
     }
 
@@ -66,10 +60,6 @@ class DependencyUpdaterPlugin
      */
     public function afterGetIndexerIdsToRunAfter(Provider $provider, array $dependencies, string $indexerId): array
     {
-        if ($this->isFilteringNeeded($indexerId, CatalogInventoryStockIndexer::INDEXER_ID)) {
-            $dependencies = array_diff($dependencies, [CatalogSearchFulltextIndexer::INDEXER_ID]);
-        }
-
         return $dependencies;
     }
 

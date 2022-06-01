@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Magento\Backend\Block\Dashboard;
 
-use Magento\Backend\Block\Dashboard\Tab\Products\Ordered;
 use Magento\Backend\Block\Widget\Tabs;
 
 /**
@@ -52,18 +51,6 @@ class Grids extends Tabs
      */
     protected function _prepareLayout()
     {
-        // load this active tab statically
-        $this->addTab(
-            'ordered_products',
-            [
-                'label' => __('Bestsellers'),
-                'content' => $this->getLayout()->createBlock(
-                    Ordered::class
-                )->toHtml(),
-                'active' => true
-            ]
-        );
-
         // load other tabs with ajax
         $this->addTab(
             'reviewed_products',

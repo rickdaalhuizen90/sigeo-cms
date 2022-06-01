@@ -44,6 +44,7 @@ class Developer extends \Magento\Framework\ObjectManager\Factory\AbstractFactory
      */
     public function create($requestedType, array $arguments = [])
     {
+
         $type = $this->config->getInstanceType($requestedType);
         $parameters = $this->definitions->getParameters($type);
         if ($parameters == null) {

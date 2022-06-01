@@ -11,7 +11,7 @@ namespace Magento\Elasticsearch\Setup\Patch\Data;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Indexer\IndexerRegistry;
-use Magento\CatalogSearch\Model\Indexer\Fulltext as FulltextIndexer;
+use Magento\Elasticsearch\Model\Indexer\Fulltext as FulltextIndexer;
 use Magento\Framework\Setup\Patch\PatchInterface;
 
 /**

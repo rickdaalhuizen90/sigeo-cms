@@ -6,7 +6,6 @@
 
 namespace Magento\Theme\CustomerData;
 
-use Magento\Customer\CustomerData\SectionSourceInterface;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Message\ManagerInterface as MessageManager;
 use Magento\Framework\Message\MessageInterface;
@@ -15,7 +14,7 @@ use Magento\Framework\View\Element\Message\InterpretationStrategyInterface;
 /**
  * Messages section
  */
-class Messages implements SectionSourceInterface
+class Messages
 {
     /**
      * Manager messages

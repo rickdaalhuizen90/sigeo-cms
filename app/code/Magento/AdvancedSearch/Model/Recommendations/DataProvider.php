@@ -63,12 +63,10 @@ class DataProvider implements SuggestedQueriesInterface
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
-        \Magento\Catalog\Model\Layer\Resolver $layerResolver,
         \Magento\AdvancedSearch\Model\ResourceModel\RecommendationsFactory $recommendationsFactory,
         \Magento\Search\Model\QueryResultFactory $queryResultFactory
     ) {
         $this->scopeConfig = $scopeConfig;
-        $this->searchLayer = $layerResolver->get();
         $this->recommendationsFactory = $recommendationsFactory;
         $this->queryResultFactory = $queryResultFactory;
     }
@@ -110,7 +108,7 @@ class DataProvider implements SuggestedQueriesInterface
 
     /**
      * Return Search Recommendations
-     *
+     * @todo refactor to place storeId line 120
      * @param QueryInterface $query
      * @return array
      */
@@ -119,8 +117,7 @@ class DataProvider implements SuggestedQueriesInterface
         $recommendations = [];
 
         if ($this->isSearchRecommendationsEnabled()) {
-            $productCollection = $this->searchLayer->getProductCollection();
-            $params = ['store_id' => $productCollection->getStoreId()];
+            $params = ['store_id' => 0];
 
             /** @var \Magento\AdvancedSearch\Model\ResourceModel\Recommendations $recommendationsResource */
             $recommendationsResource = $this->recommendationsFactory->create();

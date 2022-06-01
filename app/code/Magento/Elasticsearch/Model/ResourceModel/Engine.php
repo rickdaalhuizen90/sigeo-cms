@@ -5,8 +5,7 @@
  */
 namespace Magento\Elasticsearch\Model\ResourceModel;
 
-use Magento\CatalogSearch\Model\ResourceModel\EngineInterface;
-use Magento\Catalog\Model\Product\Visibility;
+use Magento\Elasticsearch\Model\ResourceModel\EngineInterface;
 use Magento\Framework\Indexer\ScopeResolver\IndexScopeResolver;
 
 /**
@@ -14,12 +13,8 @@ use Magento\Framework\Indexer\ScopeResolver\IndexScopeResolver;
  */
 class Engine implements EngineInterface
 {
-    /**
-     * Catalog product visibility
-     *
-     * @var Visibility
-     */
-    protected $catalogProductVisibility;
+
+    const VISIBILITY_BOTH = 4;
 
     /**
      * @var IndexScopeResolver
@@ -29,14 +24,11 @@ class Engine implements EngineInterface
     /**
      * Construct
      *
-     * @param Visibility $catalogProductVisibility
      * @param IndexScopeResolver $indexScopeResolver
      */
     public function __construct(
-        Visibility $catalogProductVisibility,
         IndexScopeResolver $indexScopeResolver
     ) {
-        $this->catalogProductVisibility = $catalogProductVisibility;
         $this->indexScopeResolver = $indexScopeResolver;
     }
 
@@ -47,7 +39,7 @@ class Engine implements EngineInterface
      */
     public function getAllowedVisibility()
     {
-        return $this->catalogProductVisibility->getVisibleInSiteIds();
+        return [self::VISIBILITY_BOTH];
     }
 
     /**

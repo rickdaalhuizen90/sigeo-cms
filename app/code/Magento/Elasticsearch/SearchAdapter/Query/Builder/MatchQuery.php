@@ -6,11 +6,7 @@
 
 namespace Magento\Elasticsearch\SearchAdapter\Query\Builder;
 
-use Magento\Elasticsearch\Model\Adapter\FieldMapper\Product\AttributeProvider;
-use Magento\Elasticsearch\Model\Adapter\FieldMapper\Product\FieldProvider\FieldType\ResolverInterface as TypeResolver;
-use Magento\Elasticsearch\Model\Adapter\FieldMapperInterface;
 use Magento\Elasticsearch\Model\Config;
-use Magento\Elasticsearch\SearchAdapter\Query\ValueTransformerPool;
 use Magento\Framework\Search\Request\Query\BoolExpression;
 use Magento\Framework\Search\Request\QueryInterface as RequestQueryInterface;
 
@@ -25,48 +21,16 @@ class MatchQuery implements QueryInterface
     public const QUERY_CONDITION_MUST_NOT = 'must_not';
 
     /**
-     * @var FieldMapperInterface
-     */
-    private $fieldMapper;
-
-    /**
-     * @var AttributeProvider
-     */
-    private $attributeProvider;
-
-    /**
-     * @var TypeResolver
-     */
-    private $fieldTypeResolver;
-
-    /**
-     * @var ValueTransformerPool
-     */
-    private $valueTransformerPool;
-
-    /**
      * @var Config
      */
     private $config;
 
     /**
-     * @param FieldMapperInterface $fieldMapper
-     * @param AttributeProvider $attributeProvider
-     * @param TypeResolver $fieldTypeResolver
-     * @param ValueTransformerPool $valueTransformerPool
      * @param Config $config
      */
     public function __construct(
-        FieldMapperInterface $fieldMapper,
-        AttributeProvider $attributeProvider,
-        TypeResolver $fieldTypeResolver,
-        ValueTransformerPool $valueTransformerPool,
         Config $config
     ) {
-        $this->fieldMapper = $fieldMapper;
-        $this->attributeProvider = $attributeProvider;
-        $this->fieldTypeResolver = $fieldTypeResolver;
-        $this->valueTransformerPool = $valueTransformerPool;
         $this->config = $config;
     }
 
@@ -127,6 +91,7 @@ class MatchQuery implements QueryInterface
      *
      * @param array $matches
      * @param array $queryValue
+     * @TODO rebuild search query
      * @return array
      */
     private function buildQueries(array $matches, array $queryValue): array
@@ -139,42 +104,42 @@ class MatchQuery implements QueryInterface
         $condition = ($count) ? 'match_phrase' : 'match';
         $transformedTypes = [];
 
-        foreach ($matches as $match) {
-            $resolvedField = $this->fieldMapper->getFieldName(
-                $match['field'],
-                ['type' => FieldMapperInterface::TYPE_QUERY]
-            );
-            $attributeAdapter = $this->attributeProvider->getByAttributeCode($resolvedField);
-            $fieldType = $this->fieldTypeResolver->getFieldType($attributeAdapter);
-            $valueTransformer = $this->valueTransformerPool->get($fieldType ?? 'text');
-            $valueTransformerHash = \spl_object_hash($valueTransformer);
+        /* foreach ($matches as $match) {
+             $resolvedField = $this->fieldMapper->getFieldName(
+                 $match['field'],
+                 ['type' => FieldMapperInterface::TYPE_QUERY]
+             );
+             $attributeAdapter = $this->attributeProvider->getByAttributeCode($resolvedField);
+             $fieldType = $this->fieldTypeResolver->getFieldType($attributeAdapter);
+             $valueTransformer = $this->valueTransformerPool->get($fieldType ?? 'text');
+             $valueTransformerHash = \spl_object_hash($valueTransformer);
 
-            if (!isset($transformedTypes[$valueTransformerHash])) {
-                $transformedTypes[$valueTransformerHash] = $valueTransformer->transform($value);
-            }
-            $transformedValue = $transformedTypes[$valueTransformerHash];
+             if (!isset($transformedTypes[$valueTransformerHash])) {
+                 $transformedTypes[$valueTransformerHash] = $valueTransformer->transform($value);
+             }
+             $transformedValue = $transformedTypes[$valueTransformerHash];
 
-            if (null === $transformedValue) {
-                //Value is incompatible with this field type.
-                continue;
-            }
-            $matchCondition = $match['matchCondition'] ?? $condition;
-            $fields = [];
-            $fields[$resolvedField] = [
-                'query' => $transformedValue,
-                'boost' => $match['boost'] ?? 1,
-            ];
+             if (null === $transformedValue) {
+                 //Value is incompatible with this field type.
+                 continue;
+             }
+             $matchCondition = $match['matchCondition'] ?? $condition;
+             $fields = [];
+             $fields[$resolvedField] = [
+                 'query' => $transformedValue,
+                 'boost' => $match['boost'] ?? 1,
+             ];
 
-            if (isset($match['analyzer'])) {
-                $fields[$resolvedField]['analyzer'] = $match['analyzer'];
-            }
-            $conditions[] = [
-                'condition' => $queryValue['condition'],
-                'body' => [
-                    $matchCondition => $fields,
-                ],
-            ];
-        }
+             if (isset($match['analyzer'])) {
+                 $fields[$resolvedField]['analyzer'] = $match['analyzer'];
+             }
+             $conditions[] = [
+                 'condition' => $queryValue['condition'],
+                 'body' => [
+                     $matchCondition => $fields,
+                 ],
+             ];
+         }*/
 
         return $conditions;
     }

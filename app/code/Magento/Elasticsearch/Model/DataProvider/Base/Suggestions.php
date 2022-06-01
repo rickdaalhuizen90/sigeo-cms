@@ -7,7 +7,6 @@ namespace Magento\Elasticsearch\Model\DataProvider\Base;
 
 use Elasticsearch\Common\Exceptions\BadRequest400Exception;
 use Magento\AdvancedSearch\Model\SuggestedQueriesInterface;
-use Magento\Elasticsearch\Model\Adapter\FieldMapper\Product\FieldProviderInterface;
 use Magento\Elasticsearch\Model\Config;
 use Magento\Elasticsearch\SearchAdapter\ConnectionManager;
 use Magento\Elasticsearch\SearchAdapter\SearchIndexNameResolver;
@@ -55,10 +54,7 @@ class Suggestions implements SuggestedQueriesInterface
      */
     private $storeManager;
 
-    /**
-     * @var FieldProviderInterface
-     */
-    private $fieldProvider;
+
 
     /**
      * @var LoggerInterface
@@ -90,7 +86,6 @@ class Suggestions implements SuggestedQueriesInterface
         ConnectionManager $connectionManager,
         SearchIndexNameResolver $searchIndexNameResolver,
         StoreManager $storeManager,
-        FieldProviderInterface $fieldProvider,
         LoggerInterface $logger = null,
         ?GetSuggestionFrequencyInterface $getSuggestionFrequency = null
     ) {
@@ -100,7 +95,6 @@ class Suggestions implements SuggestedQueriesInterface
         $this->config = $config;
         $this->searchIndexNameResolver = $searchIndexNameResolver;
         $this->storeManager = $storeManager;
-        $this->fieldProvider = $fieldProvider;
         $this->logger = $logger ?: ObjectManager::getInstance()->get(LoggerInterface::class);
         $this->getSuggestionFrequency = $getSuggestionFrequency ?:
             ObjectManager::getInstance()->get(GetSuggestionFrequencyInterface::class);
@@ -254,13 +248,9 @@ class Suggestions implements SuggestedQueriesInterface
      *
      * @return array
      */
-    private function getSuggestFields()
+    private function getSuggestFields(): array
     {
-        $fields = array_filter($this->fieldProvider->getFields(), function ($field) {
-            return (($field['type'] ?? null) === 'text') && (($field['index'] ?? null) !== false);
-        });
-
-        return array_keys($fields);
+        return [];
     }
 
     /**

@@ -119,7 +119,6 @@ class DataProvider implements \Magento\Framework\Search\Dynamic\DataProviderInte
     public function __construct(
         \Magento\Elasticsearch\SearchAdapter\ConnectionManager $connectionManager,
         \Magento\Elasticsearch\Model\Adapter\FieldMapperInterface $fieldMapper,
-        \Magento\Catalog\Model\Layer\Filter\Price\Range $range,
         \Magento\Framework\Search\Dynamic\IntervalFactory $intervalFactory,
         \Magento\Elasticsearch\Model\Config $clientConfig,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
@@ -132,7 +131,6 @@ class DataProvider implements \Magento\Framework\Search\Dynamic\DataProviderInte
     ) {
         $this->connectionManager = $connectionManager;
         $this->fieldMapper = $fieldMapper;
-        $this->range = $range;
         $this->intervalFactory = $intervalFactory;
         $this->clientConfig = $clientConfig;
         $this->storeManager = $storeManager;
@@ -150,7 +148,7 @@ class DataProvider implements \Magento\Framework\Search\Dynamic\DataProviderInte
      */
     public function getRange()
     {
-        return $this->range->getPriceRange();
+        return ;
     }
 
     /**

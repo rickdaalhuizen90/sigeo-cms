@@ -22,40 +22,17 @@ use Magento\Framework\GraphQl\Exception\GraphQlNoSuchEntityException;
 class EntityAttributeList
 {
     /**
-     * @var AttributeManagementInterface
-     */
-    private $attributeManagement;
-
-    /**
-     * @var AttributeSetRepositoryInterface
-     */
-    private $attributeSetRepository;
-
-    /**
-     * @var SearchCriteriaBuilder
-     */
-    private $searchCriteriaBuilder;
-
-    /**
      * @var FilterBuilder
      */
     private $filterBuilder;
 
     /**
-     * @param AttributeManagementInterface $attributeManagement
-     * @param AttributeSetRepositoryInterface $attributeSetRepository
-     * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @todo rebuild for GraphL
      * @param FilterBuilder $filterBuilder
      */
     public function __construct(
-        AttributeManagementInterface $attributeManagement,
-        AttributeSetRepositoryInterface $attributeSetRepository,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
         FilterBuilder $filterBuilder
     ) {
-        $this->attributeManagement =  $attributeManagement;
-        $this->attributeSetRepository = $attributeSetRepository;
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->filterBuilder = $filterBuilder;
     }
 
@@ -67,49 +44,48 @@ class EntityAttributeList
      * custom attributes.
      *
      * @param string $entityCode
-     * @param MetadataServiceInterface $metadataService
+     * @param MetadataServiceInterface|null $metadataService
      * @return boolean[]
-     * @throws GraphQlNoSuchEntityException
      */
     public function getDefaultEntityAttributes(
         string $entityCode,
         MetadataServiceInterface $metadataService = null
     ) : array {
-        $this->searchCriteriaBuilder->addFilters(
-            [
-                $this->filterBuilder
-                    ->setField('entity_type_code')
-                    ->setValue($entityCode)
-                    ->setConditionType('eq')
-                    ->create(),
-            ]
-        );
-        $attributeSetList = $this->attributeSetRepository->getList($this->searchCriteriaBuilder->create())->getItems();
+        /* $this->searchCriteriaBuilder->addFilters(
+             [
+                 $this->filterBuilder
+                     ->setField('entity_type_code')
+                     ->setValue($entityCode)
+                     ->setConditionType('eq')
+                     ->create(),
+             ]
+         );*/
+        //$attributeSetList = $this->attributeSetRepository->getList($this->searchCriteriaBuilder->create())->getItems();
         $attributes = [];
-        foreach ($attributeSetList as $attributeSet) {
-            try {
-                $attributes = array_merge(
-                    $attributes,
-                    $this->attributeManagement->getAttributes($entityCode, $attributeSet->getAttributeSetId())
-                );
-            } catch (NoSuchEntityException $exception) {
-                throw new GraphQlNoSuchEntityException(__('Entity code %1 does not exist.', [$entityCode]));
-            }
-        }
+        /* foreach ($attributeSetList as $attributeSet) {
+             try {
+                 $attributes = array_merge(
+                     $attributes,
+                     $this->attributeManagement->getAttributes($entityCode, $attributeSet->getAttributeSetId())
+                 );
+             } catch (NoSuchEntityException $exception) {
+                 throw new GraphQlNoSuchEntityException(__('Entity code %1 does not exist.', [$entityCode]));
+             }
+         }*/
         $attributeCodes = [];
-        $metadata = $metadataService ? $metadataService->getCustomAttributesMetadata() : [];
+        /*$metadata = $metadataService ? $metadataService->getCustomAttributesMetadata() : [];
         foreach ($metadata as $customAttribute) {
             if (!array_key_exists($customAttribute->getAttributeCode(), $attributeCodes)) {
                 $attributeCodes[$customAttribute->getAttributeCode()] = false;
             }
         }
-        /** @var AttributeInterface $attribute */
+        /** @var AttributeInterface $attribute
         foreach ($attributes as $attribute) {
             if (!array_key_exists($attribute->getAttributeCode(), $attributeCodes)) {
                 $attributeCodes[$attribute->getAttributeCode()]
                     = ((! $attribute->getIsUserDefined()) && !is_array($attribute));
             }
-        }
+        }*/
         return $attributeCodes;
     }
 }

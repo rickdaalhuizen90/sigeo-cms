@@ -9,8 +9,6 @@ namespace Magento\MediaStorage\App;
 use Closure;
 use Exception;
 use LogicException;
-use Magento\Catalog\Model\Config\CatalogMediaConfig;
-use Magento\Catalog\Model\View\Asset\PlaceholderFactory;
 use Magento\Framework\App;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\Filesystem\DirectoryList;
@@ -21,11 +19,12 @@ use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\Directory\WriteInterface;
 use Magento\Framework\Filesystem\Driver\File;
+use Magento\MediaStorage\Model\Config\MediaConfig;
 use Magento\MediaStorage\Model\File\Storage\Config;
 use Magento\MediaStorage\Model\File\Storage\ConfigFactory;
 use Magento\MediaStorage\Model\File\Storage\Response;
-use Magento\MediaStorage\Model\File\Storage\Synchronization;
 use Magento\MediaStorage\Model\File\Storage\SynchronizationFactory;
+use Magento\MediaStorage\Model\View\Asset\PlaceholderFactory;
 use Magento\MediaStorage\Service\ImageResize;
 
 /**
@@ -119,7 +118,7 @@ class Media implements AppInterface
      * @param State $state
      * @param ImageResize $imageResize
      * @param File $file
-     * @param CatalogMediaConfig $catalogMediaConfig
+     * @param MediaConfig|null $mediaConfig
      * @throws \Magento\Framework\Exception\FileSystemException
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -136,7 +135,7 @@ class Media implements AppInterface
         State $state,
         ImageResize $imageResize,
         File $file,
-        CatalogMediaConfig $catalogMediaConfig = null
+        MediaConfig $mediaConfig = null
     ) {
         $this->response = $response;
         $this->isAllowed = $isAllowed;
@@ -161,8 +160,8 @@ class Media implements AppInterface
         $this->appState = $state;
         $this->imageResize = $imageResize;
 
-        $catalogMediaConfig = $catalogMediaConfig ?: App\ObjectManager::getInstance()->get(CatalogMediaConfig::class);
-        $this->mediaUrlFormat = $catalogMediaConfig->getMediaUrlFormat();
+        $mediaConfig = $mediaConfig ?: App\ObjectManager::getInstance()->get(MediaConfig::class);
+        $this->mediaUrlFormat = $mediaConfig->getMediaUrlFormat();
     }
 
     /**

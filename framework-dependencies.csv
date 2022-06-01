@@ -1,0 +1,286 @@
+"Dependencies of framework:","Total number"
+,135
+
+"Dependencies for each module:",
+Magento\Backup,1
+" -- Magento\Framework",250
+
+Magento\SwaggerWebapi,1
+" -- Magento\Framework",1
+
+Magento\Indexer,1
+" -- Magento\Framework",243
+
+Magento\Elasticsearch,6
+" -- Magento\Framework",195
+" -- Magento\Setup",1
+" -- Magento\ElasticSearch",1
+" -- Magento\CatalogSearch",1
+" -- Magento\Catalog",3
+" -- Magento\Eav",1
+
+Magento\Email,3
+" -- Magento\Framework",421
+" -- Magento\Setup",2
+" -- Magento\Catalog",1
+
+Magento\AdminNotification,1
+" -- Magento\Framework",172
+
+Magento\AwsS3,3
+" -- Magento\Framework",64
+" -- Magento\Catalog",31
+" -- Magento\FunctionalTestingFramework",2
+
+Magento\MediaGallerySynchronization,2
+" -- Magento\Framework",39
+" -- Magento\TestFramework",3
+
+Magento\Cron,1
+" -- Magento\Framework",207
+
+Magento\Store,4
+" -- Magento\Framework",862
+" -- Magento\FunctionalTestingFramework",5
+" -- Magento\Catalog",2
+" -- Magento\TestFramework",6
+
+Magento\MediaGalleryUi,2
+" -- Magento\Framework",169
+" -- Magento\FunctionalTestingFramework",3
+
+Magento\DirectoryGraphQl,1
+" -- Magento\Framework",22
+
+Magento\MediaGallerySynchronizationApi,1
+" -- Magento\Framework",5
+
+Magento\Ui,5
+" -- Magento\Framework",740
+" -- Magento\Customer",4
+" -- Magento\Test",3
+" -- Magento\Catalog",2
+" -- Magento\Eav",5
+
+Magento\JwtFrameworkAdapter,1
+" -- Magento\Framework",82
+
+Magento\CmsGraphQl,1
+" -- Magento\Framework",18
+
+Magento\Elasticsearch7,2
+" -- Magento\Framework",14
+" -- Magento\CatalogSearch",5
+
+Magento\Developer,1
+" -- Magento\Framework",332
+
+Magento\CacheInvalidate,1
+" -- Magento\Framework",17
+
+Magento\StoreGraphQl,1
+" -- Magento\Framework",20
+
+Magento\Widget,1
+" -- Magento\Framework",358
+
+Magento\MediaGalleryUiApi,1
+" -- Magento\Framework",1
+
+Magento\PageCache,1
+" -- Magento\Framework",348
+
+Magento\MediaGalleryApi,1
+" -- Magento\Framework",17
+
+Magento\EncryptionKey,1
+" -- Magento\Framework",53
+
+Magento\Translation,1
+" -- Magento\Framework",198
+
+Magento\Swagger,1
+" -- Magento\Framework",24
+
+Magento\Variable,1
+" -- Magento\Framework",96
+
+Magento\MediaGalleryRenditionsApi,1
+" -- Magento\Framework",3
+
+Magento\MediaGallerySynchronizationMetadata,1
+" -- Magento\Framework",6
+
+Magento\Config,1
+" -- Magento\Framework",1139
+
+Magento\GraphQlCache,1
+" -- Magento\Framework",42
+
+Magento\Security,2
+" -- Magento\Framework",241
+" -- Magento\Customer",4
+
+Magento\MediaContentSynchronization,2
+" -- Magento\Framework",22
+" -- Magento\TestFramework",1
+
+Magento\MysqlMq,1
+" -- Magento\Framework",66
+
+Magento\Deploy,4
+" -- Magento\Framework",321
+" -- Magento\Importer",6
+" -- Magento\SomeModule",2
+" -- Magento\Setup",1
+
+Magento\Integration,2
+" -- Magento\Customer",5
+" -- Magento\Framework",671
+
+Magento\RemoteStorage,5
+" -- Magento\Framework",139
+" -- Magento\Catalog",3
+" -- Magento\ImportExport",3
+" -- Magento\CatalogImportExport",2
+" -- Magento\DownloadableImportExport",1
+
+Magento\SwaggerWebapiAsync,1
+" -- Magento\Framework",1
+
+Magento\JwtUserToken,1
+" -- Magento\Framework",46
+
+Magento\WebapiAsync,3
+" -- Magento\Framework",93
+" -- Magento\Catalog",3
+" -- Magento\Customer",8
+
+Magento\MediaContentSynchronizationApi,1
+" -- Magento\Framework",2
+
+Magento\Rss,1
+" -- Magento\Framework",106
+
+Magento\MediaContentCms,1
+" -- Magento\Framework",17
+
+Magento\RequireJs,1
+" -- Magento\Framework",60
+
+Magento\WebapiSecurity,1
+" -- Magento\Framework",13
+
+Magento\MediaGalleryRenditions,2
+" -- Magento\Framework",34
+" -- Magento\TestFramework",3
+
+Magento\Amqp,1
+" -- Magento\Framework",61
+
+Magento\Sitemap,1
+" -- Magento\Framework",109
+
+Magento\MediaGalleryMetadata,2
+" -- Magento\Framework",95
+" -- Magento\TestFramework",7
+
+Magento\User,2
+" -- Magento\Framework",330
+" -- Magento\TestFramework",3
+
+Magento\Backend,9
+" -- Magento\Framework",1621
+" -- Magento\Sales",3
+" -- Magento\Reports",1
+" -- Magento\Customer",4
+" -- Magento\Quote",7
+" -- Magento\Catalog",3
+" -- Magento\FunctionalTestingFramework",2
+" -- Magento\Eav",7
+" -- Magento\Setup",3
+
+Magento\MediaContentSynchronizationCms,2
+" -- Magento\Framework",9
+" -- Magento\TestFramework",3
+
+Magento\Directory,3
+" -- Magento\Framework",404
+" -- Magento\Customer",2
+" -- Magento\Sales",1
+
+Magento\MediaGalleryIntegration,2
+" -- Magento\Framework",14
+" -- Magento\TestFramework",4
+
+Magento\MediaContentApi,1
+" -- Magento\Framework",13
+
+Magento\MediaGalleryCmsUi,1
+" -- Magento\Framework",15
+
+Magento\Search,3
+" -- Magento\Framework",352
+" -- Magento\TaxImportExport",1
+" -- Magento\Reports",1
+
+Magento\MediaGallery,1
+" -- Magento\Framework",116
+
+Magento\Cms,2
+" -- Magento\Framework",1163
+" -- Magento\Catalog",5
+
+Magento\Version,1
+" -- Magento\Framework",10
+
+Magento\Theme,2
+" -- Magento\Framework",949
+" -- Magento\Customer",3
+
+Magento\GraphQl,2
+" -- Magento\Framework",149
+" -- Magento\Eav",3
+
+Magento\GoogleAnalytics,1
+" -- Magento\Framework",12
+
+Magento\AdvancedSearch,3
+" -- Magento\Framework",60
+" -- Magento\Catalog",2
+" -- Magento\Customer",1
+
+Magento\MediaStorage,3
+" -- Magento\Framework",295
+" -- Magento\Catalog",10
+" -- Magento\Eav",2
+
+Magento\Csp,1
+" -- Magento\Framework",60
+
+Magento\MediaContent,1
+" -- Magento\Framework",27
+
+Magento\Cookie,1
+" -- Magento\Framework",105
+
+Magento\AsynchronousOperations,1
+" -- Magento\Framework",322
+
+Magento\Robots,1
+" -- Magento\Framework",45
+
+Magento\Webapi,5
+" -- Magento\Framework",392
+" -- Magento\Customer",12
+" -- Magento\Eav",1
+" -- Magento\TestModule5",2
+" -- Magento\Catalog",2
+
+Magento\MediaGalleryMetadataApi,1
+" -- Magento\Framework",11
+
+Magento\Authorization,3
+" -- Magento\Framework",81
+" -- Magento\SharedCatalog",1
+" -- Magento\TestFramework",2

@@ -104,12 +104,6 @@ class Instance extends \Magento\Framework\Model\AbstractModel
     protected $_relatedCacheTypes;
 
     /**
-     * @var \Magento\Catalog\Model\Product\Type
-     * @since 101.0.4
-     */
-    protected $_productType;
-
-    /**
      * @var \Magento\Widget\Model\Config\Reader
      * @since 101.0.4
      */
@@ -151,7 +145,6 @@ class Instance extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\Escaper $escaper
      * @param \Magento\Framework\View\FileSystem $viewFileSystem
      * @param \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList
-     * @param \Magento\Catalog\Model\Product\Type $productType
      * @param \Magento\Widget\Model\Config\Reader $reader
      * @param \Magento\Widget\Model\Widget $widgetModel
      * @param \Magento\Widget\Model\NamespaceResolver $namespaceResolver
@@ -172,7 +165,6 @@ class Instance extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Escaper $escaper,
         \Magento\Framework\View\FileSystem $viewFileSystem,
         \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList,
-        \Magento\Catalog\Model\Product\Type $productType,
         \Magento\Widget\Model\Config\Reader $reader,
         \Magento\Widget\Model\Widget $widgetModel,
         \Magento\Widget\Model\NamespaceResolver $namespaceResolver,
@@ -190,7 +182,6 @@ class Instance extends \Magento\Framework\Model\AbstractModel
         $this->_viewFileSystem = $viewFileSystem;
         $this->_cacheTypeList = $cacheTypeList;
         $this->_relatedCacheTypes = $relatedCacheTypes;
-        $this->_productType = $productType;
         $this->_reader = $reader;
         $this->_widgetModel = $widgetModel;
         $this->mathRandom = $mathRandom;
@@ -222,11 +213,7 @@ class Instance extends \Magento\Framework\Model\AbstractModel
             'notanchor_categories' => self::SINGLE_CATEGORY_LAYOUT_HANDLE,
             'all_products' => self::SINGLE_PRODUCT_LAYOUT_HANDLE,
         ];
-        foreach (array_keys($this->_productType->getTypes()) as $typeId) {
-            $layoutHandle = str_replace('{{TYPE}}', $typeId, self::PRODUCT_TYPE_LAYOUT_HANDLE);
-            $this->_layoutHandles[$typeId . '_products'] = $layoutHandle;
-            $this->_specificEntitiesLayoutHandles[$typeId . '_products'] = self::SINGLE_PRODUCT_LAYOUT_HANDLE;
-        }
+
     }
 
     /**

@@ -6,10 +6,6 @@
 
 namespace Magento\Elasticsearch\SearchAdapter\Query\Builder;
 
-use Magento\Elasticsearch\Model\Adapter\FieldMapper\Product\AttributeProvider;
-use Magento\Elasticsearch\Model\Adapter\FieldMapper\Product\FieldProvider\FieldName\ResolverInterface
-    as FieldNameResolver;
-use Magento\Elasticsearch\Model\Adapter\FieldMapperInterface;
 use Magento\Framework\Search\RequestInterface;
 
 /**
@@ -32,16 +28,6 @@ class Sort
     ];
 
     /**
-     * @var AttributeProvider
-     */
-    private $attributeAdapterProvider;
-
-    /**
-     * @var FieldNameResolver
-     */
-    private $fieldNameResolver;
-
-    /**
      * @var array
      */
     private $skippedFields;
@@ -52,19 +38,13 @@ class Sort
     private $map;
 
     /**
-     * @param AttributeProvider $attributeAdapterProvider
-     * @param FieldNameResolver $fieldNameResolver
      * @param array $skippedFields
      * @param array $map
      */
     public function __construct(
-        AttributeProvider $attributeAdapterProvider,
-        FieldNameResolver $fieldNameResolver,
         array $skippedFields = [],
         array $map = []
     ) {
-        $this->attributeAdapterProvider = $attributeAdapterProvider;
-        $this->fieldNameResolver = $fieldNameResolver;
         $this->skippedFields = array_merge(self::DEFAULT_SKIPPED_FIELDS, $skippedFields);
         $this->map = array_merge(self::DEFAULT_MAP, $map);
     }
@@ -74,7 +54,7 @@ class Sort
      *
      * @param RequestInterface $request
      * @return array
-     *
+     * @todo
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
@@ -92,22 +72,22 @@ class Sort
             if (in_array($item['field'], $this->skippedFields)) {
                 continue;
             }
-            $attribute = $this->attributeAdapterProvider->getByAttributeCode($item['field']);
-            $fieldName = $this->fieldNameResolver->getFieldName($attribute);
-            if (isset($this->map[$fieldName])) {
-                $fieldName = $this->map[$fieldName];
-            }
-            if ($attribute->isSortable() &&
-                !$attribute->isComplexType() &&
-                !($attribute->isFloatType() || $attribute->isIntegerType())
-            ) {
-                $suffix = $this->fieldNameResolver->getFieldName(
-                    $attribute,
-                    ['type' => FieldMapperInterface::TYPE_SORT]
-                );
-                $fieldName .= '.' . $suffix;
-            }
-            if ($attribute->isComplexType() && $attribute->isSortable()) {
+            /*  $attribute = $this->attributeAdapterProvider->getByAttributeCode($item['field']);
+              $fieldName = $this->fieldNameResolver->getFieldName($attribute);
+              if (isset($this->map[$fieldName])) {
+                  $fieldName = $this->map[$fieldName];
+              }
+              if ($attribute->isSortable() &&
+                  !$attribute->isComplexType() &&
+                  !($attribute->isFloatType() || $attribute->isIntegerType())
+              ) {
+                  $suffix = $this->fieldNameResolver->getFieldName(
+                      $attribute,
+                      ['type' => FieldMapperInterface::TYPE_SORT]
+                  );
+                  $fieldName .= '.' . $suffix;
+              }*/
+           /* if ($attribute->isComplexType() && $attribute->isSortable()) {
                 $fieldName .= '_value';
                 $suffix = $this->fieldNameResolver->getFieldName(
                     $attribute,
@@ -119,7 +99,7 @@ class Sort
                 $fieldName => [
                     'order' => strtolower($item['direction'])
                 ]
-            ];
+            ];*/
         }
 
         return $sorts;

@@ -6,7 +6,7 @@
 
 namespace Magento\Elasticsearch\Model\ResourceModel\Fulltext\Collection;
 
-use Magento\CatalogSearch\Model\ResourceModel\Fulltext\Collection\SearchCriteriaResolverInterface;
+use Magento\Elasticsearch\Model\ResourceModel\Fulltext\Collection\SearchCriteriaResolverInterface;
 use Magento\Framework\Data\Collection;
 use Magento\Framework\Api\Search\SearchCriteriaBuilder;
 use Magento\Framework\Api\Search\SearchCriteria;

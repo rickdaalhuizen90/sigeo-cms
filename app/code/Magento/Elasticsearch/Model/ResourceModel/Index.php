@@ -5,16 +5,11 @@
  */
 namespace Magento\Elasticsearch\Model\ResourceModel;
 
-use Magento\Catalog\Model\Indexer\Product\Price\DimensionCollectionFactory;
+use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Model\ResourceModel\Db\Context;
-use Magento\Store\Model\StoreManagerInterface;
-use Magento\Catalog\Api\ProductRepositoryInterface;
-use Magento\Catalog\Api\CategoryRepositoryInterface;
-use Magento\Eav\Model\Config;
-use Magento\Catalog\Api\Data\ProductAttributeInterface;
-use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Framework\Search\Request\IndexScopeResolverInterface as TableResolver;
+use Magento\Store\Model\StoreManagerInterface;
 
 /**
  * Elasticsearch index resource model
@@ -23,11 +18,6 @@ use Magento\Framework\Search\Request\IndexScopeResolverInterface as TableResolve
  */
 class Index extends \Magento\AdvancedSearch\Model\ResourceModel\Index
 {
-    /**
-     * @var ProductRepositoryInterface
-     * @since 100.1.0
-     */
-    protected $productRepository;
 
     /**
      * @var CategoryRepositoryInterface
@@ -46,35 +36,23 @@ class Index extends \Magento\AdvancedSearch\Model\ResourceModel\Index
      * @param Context $context
      * @param StoreManagerInterface $storeManager
      * @param MetadataPool $metadataPool
-     * @param ProductRepositoryInterface $productRepository
-     * @param CategoryRepositoryInterface $categoryRepository
-     * @param Config $eavConfig
      * @param null $connectionName
      * @param TableResolver|null $tableResolver
-     * @param DimensionCollectionFactory|null $dimensionCollectionFactory
      * @SuppressWarnings(Magento.TypeDuplication)
      */
     public function __construct(
         Context $context,
         StoreManagerInterface $storeManager,
         MetadataPool $metadataPool,
-        ProductRepositoryInterface $productRepository,
-        CategoryRepositoryInterface $categoryRepository,
-        Config $eavConfig,
         $connectionName = null,
-        TableResolver $tableResolver = null,
-        DimensionCollectionFactory $dimensionCollectionFactory = null
+        TableResolver $tableResolver = null
     ) {
-        $this->productRepository = $productRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->eavConfig = $eavConfig;
         parent::__construct(
             $context,
             $storeManager,
             $metadataPool,
             $connectionName,
-            $tableResolver,
-            $dimensionCollectionFactory
+            $tableResolver
         );
     }
 
@@ -89,37 +67,37 @@ class Index extends \Magento\AdvancedSearch\Model\ResourceModel\Index
     public function getFullProductIndexData($productId, $indexData)
     {
         $productAttributes = [];
-        $attributeCodes = $this->eavConfig->getEntityAttributeCodes(ProductAttributeInterface::ENTITY_TYPE_CODE);
-        $product = $this->productRepository->getById($productId);
-        foreach ($attributeCodes as $attributeCode) {
-            $value = $product->getData($attributeCode);
-            $attribute = $this->eavConfig->getAttribute(
-                ProductAttributeInterface::ENTITY_TYPE_CODE,
-                $attributeCode
-            );
-            $frontendInput = $attribute->getFrontendInput();
-            if (in_array($attribute->getAttributeId(), array_keys($indexData))) {
-                if (is_array($indexData[$attribute->getAttributeId()])) {
-                    if (isset($indexData[$attribute->getAttributeId()][$productId])) {
-                        $value = $indexData[$attribute->getAttributeId()][$productId];
-                    } else {
-                        $value = implode(' ', $indexData[$attribute->getAttributeId()]);
-                    }
-                } else {
-                    $value = $indexData[$attribute->getAttributeId()];
-                }
-            }
-            if ($value) {
-                $productAttributes[$attributeCode] = $value;
-                if ($frontendInput == 'select') {
-                    foreach ($attribute->getOptions() as $option) {
-                        if ($option->getValue() == $value) {
-                            $productAttributes[$attributeCode . '_value'] = $option->getLabel();
-                        }
-                    }
-                }
-            }
-        }
+        /* $attributeCodes = $this->eavConfig->getEntityAttributeCodes(ProductAttributeInterface::ENTITY_TYPE_CODE);
+         $product = $this->productRepository->getById($productId);
+         foreach ($attributeCodes as $attributeCode) {
+             $value = $product->getData($attributeCode);
+             $attribute = $this->eavConfig->getAttribute(
+                 ProductAttributeInterface::ENTITY_TYPE_CODE,
+                 $attributeCode
+             );
+             $frontendInput = $attribute->getFrontendInput();
+             if (in_array($attribute->getAttributeId(), array_keys($indexData))) {
+                 if (is_array($indexData[$attribute->getAttributeId()])) {
+                     if (isset($indexData[$attribute->getAttributeId()][$productId])) {
+                         $value = $indexData[$attribute->getAttributeId()][$productId];
+                     } else {
+                         $value = implode(' ', $indexData[$attribute->getAttributeId()]);
+                     }
+                 } else {
+                     $value = $indexData[$attribute->getAttributeId()];
+                 }
+             }
+             if ($value) {
+                 $productAttributes[$attributeCode] = $value;
+                 if ($frontendInput == 'select') {
+                     foreach ($attribute->getOptions() as $option) {
+                         if ($option->getValue() == $value) {
+                             $productAttributes[$attributeCode . '_value'] = $option->getLabel();
+                         }
+                     }
+                 }
+             }
+         }*/
         return $productAttributes;
     }
 
@@ -133,24 +111,24 @@ class Index extends \Magento\AdvancedSearch\Model\ResourceModel\Index
      */
     public function getFullCategoryProductIndexData($storeId = null, $productIds = null)
     {
-        $categoryPositions = $this->getCategoryProductIndexData($storeId, $productIds);
+        // $categoryPositions = $this->getCategoryProductIndexData($storeId, $productIds);
         $categoryData = [];
 
-        foreach ($categoryPositions as $productId => $positions) {
-            foreach ($positions as $categoryId => $position) {
-                try {
-                    $category = $this->categoryRepository->get($categoryId, $storeId);
-                } catch (NoSuchEntityException $e) {
-                    continue;
-                }
-                $categoryName = $category->getName();
-                $categoryData[$productId][] = [
-                    'id' => $categoryId,
-                    'name' => $categoryName,
-                    'position' => $position
-                ];
-            }
-        }
+        /* foreach ($categoryPositions as $productId => $positions) {
+             foreach ($positions as $categoryId => $position) {
+                 try {
+                     $category = $this->categoryRepository->get($categoryId, $storeId);
+                 } catch (NoSuchEntityException $e) {
+                     continue;
+                 }
+                 $categoryName = $category->getName();
+                 $categoryData[$productId][] = [
+                     'id' => $categoryId,
+                     'name' => $categoryName,
+                     'position' => $position
+                 ];
+             }
+         }*/
         return $categoryData;
     }
 }
