@@ -47,11 +47,11 @@
                             <argument name="view_model" xsi:type="object">Magento\Store\ViewModel\SwitcherUrlProvider</argument>
                         </arguments>
                     </block>
-                    <block class="Magento\Customer\Block\Account\Navigation" name="top.links">
+                    <!--<block class="Magento\Customer\Block\Account\Navigation" name="top.links">
                         <arguments>
                             <argument name="css_class" xsi:type="string">header links</argument>
                         </arguments>
-                    </block>
+                    </block>-->
                 </container>
             </container>
             <container name="header-wrapper" label="Page Header" as="header-wrapper" htmlTag="div" htmlClass="header content">

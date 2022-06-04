@@ -7,6 +7,11 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
+    <type name="Magento\Framework\Webapi\ServiceTypeToEntityTypeMap">
+        <arguments>
+            <argument name="serviceTypeToEntityTypeMap" xsi:type="array" />
+        </arguments>
+    </type>
     <type name="Magento\Sigeo\Model\TypeLocator\ComplexType">
         <arguments>
             <argument name="backendModelToAttributeTypeMap" xsi:type="array">

@@ -5,7 +5,7 @@
  */
 namespace Magento\Theme\Block\Html;
 
-use Magento\Customer\Model\Context;
+use Magento\Sigeo\Model\Context;
 
 /**
  * Html page footer block
