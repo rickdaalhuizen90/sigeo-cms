@@ -44,9 +44,10 @@ class Developer extends \Magento\Framework\ObjectManager\Factory\AbstractFactory
      */
     public function create($requestedType, array $arguments = [])
     {
-
         $type = $this->config->getInstanceType($requestedType);
+
         $parameters = $this->definitions->getParameters($type);
+
         if ($parameters == null) {
             return new $type();
         }
@@ -58,12 +59,13 @@ class Developer extends \Magento\Framework\ObjectManager\Factory\AbstractFactory
         $this->creationStack[$requestedType] = $requestedType;
         try {
             $args = $this->_resolveArguments($requestedType, $parameters, $arguments);
+
+
             unset($this->creationStack[$requestedType]);
         } catch (\Exception $e) {
             unset($this->creationStack[$requestedType]);
             throw $e;
         }
-
         return $this->createObject($type, $args);
     }
 }

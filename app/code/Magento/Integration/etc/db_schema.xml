@@ -65,9 +65,9 @@
         <constraint xsi:type="foreign" referenceId="OAUTH_TOKEN_CONSUMER_ID_OAUTH_CONSUMER_ENTITY_ID" table="oauth_token"
                     column="consumer_id" referenceTable="oauth_consumer" referenceColumn="entity_id"
                     onDelete="CASCADE"/>
-        <constraint xsi:type="foreign" referenceId="OAUTH_TOKEN_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID" table="oauth_token"
+       <!-- <constraint xsi:type="foreign" referenceId="OAUTH_TOKEN_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID" table="oauth_token"
                     column="customer_id" referenceTable="customer_entity" referenceColumn="entity_id"
-                    onDelete="CASCADE"/>
+                    onDelete="CASCADE"/>-->
         <constraint xsi:type="unique" referenceId="OAUTH_TOKEN_TOKEN">
             <column name="token"/>
         </constraint>

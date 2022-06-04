@@ -13,7 +13,9 @@ class InterceptableValidator
      */
     public function validate($className)
     {
-        return !$this->isInterceptor($className) && $this->isInterceptable($className);
+        $test1 =!$this->isInterceptor($className);
+        $test2 = $this->isInterceptable($className);
+        return $test1 && $test2;
     }
 
     /**
@@ -25,6 +27,7 @@ class InterceptableValidator
      */
     private function isInterceptor($instanceName)
     {
+
         return $this->endsWith($instanceName, '\Interceptor');
     }
 

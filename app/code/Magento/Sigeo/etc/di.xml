@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="Magento\Sigeo\Model\TypeLocator\ComplexType">
+        <arguments>
+            <argument name="backendModelToAttributeTypeMap" xsi:type="array">
+                <item name="Magento\Sigeo\Model\Attribute\Data\Text" xsi:type="string">string</item>
+                <item name="Magento\Sigeo\Model\Attribute\Data\Date" xsi:type="string">string</item>
+                <item name="Magento\Sigeo\Model\Attribute\Data\Boolean" xsi:type="string">boolean</item>
+                <item name="Magento\Sigeo\Model\Attribute\Data\File" xsi:type="string">string</item>
+                <item name="Magento\Sigeo\Model\Attribute\Data\Hidden" xsi:type="string">string</item>
+                <item name="Magento\Sigeo\Model\Attribute\Data\Image" xsi:type="string">Magento\Framework\Api\Data\ImageContentInterface</item>
+                <item name="Magento\Sigeo\Model\Attribute\Data\Multiline" xsi:type="string">string</item>
+                <item name="Magento\Sigeo\Model\Attribute\Data\Multiselect" xsi:type="string">string</item>
+                <item name="Magento\Sigeo\Model\Attribute\Data\Select" xsi:type="string">string</item>
+                <item name="Magento\Sigeo\Model\Attribute\Data\Textarea" xsi:type="string">string</item>
+                <item name="Magento\Sigeo\Model\Entity\Attribute\Backend\DefaultBackend" xsi:type="string">string</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -147,6 +147,7 @@ class Config implements \Magento\Framework\Interception\ConfigInterface
         $type = ltrim((string)$type, '\\');
         if (!isset($this->_intercepted[$type])) {
             $realType = $this->_omConfig->getOriginalInstanceType($type);
+
             if ($type !== $realType) {
                 if ($this->_inheritInterception($realType)) {
                     $this->_intercepted[$type] = true;
@@ -156,8 +157,10 @@ class Config implements \Magento\Framework\Interception\ConfigInterface
                 $parts = explode('\\', $type);
                 if (!in_array(end($parts), $this->_serviceClassTypes) && $this->_relations->has($type)) {
                     $relations = $this->_relations->getParents($type);
+
                     foreach ($relations as $relation) {
                         if ($relation && $this->_inheritInterception($relation)) {
+
                             $this->_intercepted[$type] = true;
                             return true;
                         }
@@ -174,6 +177,7 @@ class Config implements \Magento\Framework\Interception\ConfigInterface
      */
     public function hasPlugins($type)
     {
+
         if (isset($this->_intercepted[$type])) {
             return $this->_intercepted[$type];
         }

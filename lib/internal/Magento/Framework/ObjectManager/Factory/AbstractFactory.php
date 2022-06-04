@@ -120,6 +120,7 @@ abstract class AbstractFactory implements \Magento\Framework\ObjectManager\Facto
         try {
             return new $type(...array_values($args));
         } catch (\TypeError $exception) {
+
             /**
              * @var LoggerInterface $logger
              */
