@@ -73,7 +73,8 @@ class Alert extends \Magento\Framework\App\Config\Value
      */
     public function afterSave()
     {
-        $time = $this->getData('groups/productalert_cron/fields/time/value') ?:
+        return parent::afterSave();
+        /*$time = $this->getData('groups/productalert_cron/fields/time/value') ?:
             explode(
                 ',',
                 $this->_config->getValue(
@@ -115,6 +116,6 @@ class Alert extends \Magento\Framework\App\Config\Value
             throw new LocalizedException(__('We can\'t save the cron expression.'));
         }
 
-        return parent::afterSave();
+        return parent::afterSave();*/
     }
 }

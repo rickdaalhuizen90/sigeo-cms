@@ -18,11 +18,6 @@
         </referenceContainer>
         <referenceContainer name="content">
             <block name="dashboard" template="Magento_Backend::dashboard/index.phtml">
-                <block class="Magento\Backend\Block\Dashboard\Orders\Grid" name="dashboard.lastOrders" as="lastOrders"/>
-                <block class="Magento\Backend\Block\Dashboard\Totals" name="dashboard.totals" as="totals">
-                    <block template="Magento_Backend::dashboard/totalbar/script.phtml" name="dashboard.totals.script"/>
-                </block>
-                <block class="Magento\Backend\Block\Dashboard\Sales" name="dashboard.sales" as="sales"/>
                 <block class="Magento\Backend\Block\Dashboard\Grids" name="dashboard.grids" as="grids"/>
                 <block name="dashboard.chart.disabled"
                        as="chartDisabled"

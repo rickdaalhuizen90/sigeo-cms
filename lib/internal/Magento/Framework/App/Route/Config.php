@@ -99,7 +99,7 @@ class Config implements ConfigInterface
 
     /**
      * Retrieve route front name
-     *
+     * @todo change code to check if  frontname isset
      * @param string $routeId
      * @param null|string $scope
      * @return string
@@ -107,12 +107,17 @@ class Config implements ConfigInterface
     public function getRouteFrontName($routeId, $scope = null)
     {
         $routes = $this->_getRoutes($scope);
-        return isset($routes[$routeId]) ? $routes[$routeId]['frontName'] : $routeId;
+
+        if(isset($routes[$routeId]) && isset($routes[$routeId]['frontName'])){
+            return $routes[$routeId]['frontName'];
+        }
+
+        return $routeId;
     }
 
     /**
      * @inheritdoc
-     *
+     * @todo find missing frontname isset added
      * @param string $frontName
      * @param string $scope
      * @return bool|int|string
@@ -120,7 +125,8 @@ class Config implements ConfigInterface
     public function getRouteByFrontName($frontName, $scope = null)
     {
         foreach ($this->_getRoutes($scope) as $routeId => $routeData) {
-            if ($routeData['frontName'] == $frontName) {
+
+            if (isset($routeData['frontName']) && $routeData['frontName'] == $frontName) {
                 return $routeId;
             }
         }
@@ -140,7 +146,7 @@ class Config implements ConfigInterface
         $routes = $this->_getRoutes($scope);
         $modules = [];
         foreach ($routes as $routeData) {
-            if ($routeData['frontName'] == $frontName && isset($routeData['modules'])) {
+            if (isset($routeData['frontName']) && $routeData['frontName'] == $frontName && isset($routeData['modules'])) {
                 $modules = $routeData['modules'];
                 break;
             }

@@ -52,32 +52,9 @@ class Grids extends Tabs
     protected function _prepareLayout()
     {
         // load other tabs with ajax
-        $this->addTab(
-            'reviewed_products',
-            [
-                'label' => __('Most Viewed Products'),
-                'url' => $this->getUrl('adminhtml/*/productsViewed', ['_current' => true]),
-                'class' => 'ajax'
-            ]
-        );
 
-        $this->addTab(
-            'new_customers',
-            [
-                'label' => __('New Customers'),
-                'url' => $this->getUrl('adminhtml/*/customersNewest', ['_current' => true]),
-                'class' => 'ajax'
-            ]
-        );
 
-        $this->addTab(
-            'customers',
-            [
-                'label' => __('Customers'),
-                'url' => $this->getUrl('adminhtml/*/customersMost', ['_current' => true]),
-                'class' => 'ajax'
-            ]
-        );
+
 
         return parent::_prepareLayout();
     }

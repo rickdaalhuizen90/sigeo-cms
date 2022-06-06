@@ -59,10 +59,10 @@
                         <item name="regexp" xsi:type="boolean">true</item>
                         <item name="name" xsi:type="string">media[/\\]+captcha[/\\]*$</item>
                     </item>
-                    <item name="catalog/product" xsi:type="array">
+                  <!--  <item name="catalog/product" xsi:type="array">
                         <item name="regexp" xsi:type="boolean">true</item>
                         <item name="name" xsi:type="string">media[/\\]+catalog[/\\]+product[/\\]*$</item>
-                    </item>
+                    </item>-->
                     <item name="customer" xsi:type="array">
                         <item name="regexp" xsi:type="boolean">true</item>
                         <item name="name" xsi:type="string">media[/\\]+customer[/\\]*$</item>

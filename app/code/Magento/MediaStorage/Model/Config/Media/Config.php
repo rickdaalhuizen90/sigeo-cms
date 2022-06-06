@@ -45,30 +45,34 @@ class Config implements ConfigInterface
 
     /**
      * Get filesystem directory path for product images relative to the media directory.
-     *
+     * @todo add media directory path
      * @return string
      */
     public function getBaseMediaPathAddition()
     {
-        return 'catalog/product';
+        return "";
+        //return 'catalog/product';
     }
 
     /**
      * Get web-based directory path for product images relative to the media directory.
-     *
+     * @todo add media directory path
      * @return string
      */
     public function getBaseMediaUrlAddition()
     {
-        return 'catalog/product';
+        return "";
+        //return 'catalog/product';
     }
 
     /**
+     * @todo add media directory path
      * @inheritdoc
      */
     public function getBaseMediaPath()
     {
-        return 'catalog/product';
+        return "";
+        //return 'catalog/product';
     }
 
     /**

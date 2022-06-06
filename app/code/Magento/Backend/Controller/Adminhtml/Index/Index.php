@@ -19,6 +19,7 @@ class Index extends \Magento\Backend\Controller\Adminhtml\Index implements HttpG
      */
     public function execute()
     {
+        die('321');
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         return $resultRedirect->setPath($this->_backendUrl->getStartupPageUrl());
